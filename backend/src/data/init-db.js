@@ -5,6 +5,7 @@ import axios from 'axios';
 import mongoose from "mongoose";
 import { GoogleTrend } from "./googleTrendSchema.js";
 import { HistoryToday } from "./historyinTodaySchema.js";
+import { TodayWeather } from "./TodayWeatherSchema.js";
 var mongodb_url = "mongodb://127.0.0.1:27017/hotspot";
 
 // This is a standalone program which will populate the database with initial data.
@@ -18,7 +19,8 @@ async function run() {
   database.once('connected', () => {
     console.log('Database Connected');
 })
-getAllNews();
+getTodayWeather();
+
 
 }
 
@@ -64,6 +66,28 @@ function getGoogleTrend() {
       })
       .catch(function (error) {
           console.log(error);
+      })
+}
+
+function getTodayWeather(){
+    axios.get('https://the-weather-api.p.rapidapi.com/api/weather/auckland', 
+  {
+      headers: { 
+        'X-RapidAPI-Key': 'c5d7516ffamshd606a9ff318bad1p1f46bajsnabd2700a6eb6',
+        'X-RapidAPI-Host': 'the-weather-api.p.rapidapi.com'
+       }
+  })
+      .then( response => {
+          console.log(response.data.data);
+          const result = response.data.data
+          const spot = new TodayWeather({
+              source: 'Today Weather',
+              city: result.city,
+              current_weather: result.current_weather,
+              bg_image: result.bg_image,
+              temp: result.temp
+          })
+          spot.save();
       })
 }
 
