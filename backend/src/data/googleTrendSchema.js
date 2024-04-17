@@ -13,3 +13,4 @@ const googleTrendSchema = new Schema(
 const GoogleTrend = mongoose.model('GoogleTrend', googleTrendSchema, 'googleTrends');
 
 export { GoogleTrend };
+
