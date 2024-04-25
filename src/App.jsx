@@ -1,8 +1,12 @@
-
+import React from "react";
+import Register from './src/Register.jsx';
 function App() {
   return (
-    0
-  )
+    <div className = "App">
+      <h1>Register</h1>
+      <Register/>
+    </div>
+  );
 }
 
-export default App
+export default App;
