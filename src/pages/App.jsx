@@ -1,10 +1,13 @@
-import React, {Component} from 'react'
-export default class SignUpPage extends Component{
-    render(){
-        return (
-            <div>
-                HomePage
-            </div>
-        )
-    }
+import React from 'react';
+import RegisterPage from './SignUp/SignUpPage';
+// import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <RegisterPage />
+    </div>
+  );
 }
+
+export default App;
