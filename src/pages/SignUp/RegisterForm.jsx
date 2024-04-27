@@ -12,6 +12,7 @@ function RegisterForm({ onSubmit }) {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  //下面这行代码是发到SERVER的CONST，对接好我们再用
   const sendFormDataToServer = (data) => {
     fetch('API URL', {
       method: 'POST',
@@ -37,9 +38,9 @@ function RegisterForm({ onSubmit }) {
     }
     const { confirmPassword, ...dataToSubmit } = formData;
         console.log(dataToSubmit)
-        //sendFormDataToServer(dataToSubmit);
+        //sendFormDataToServer(dataToSubmit);这里我暂时打上备注了，因为API那些我还不晓得
   };
-    // 这里可以加上发送数据到后端的代码
+    // 这里可以加上发送数据到后端的代码,
   return (
     <form onSubmit={handleSubmit}>
       <h2>Create Your Own Account!</h2>
