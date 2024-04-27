@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {HashRouter as Router, Route, Switch} from "react-router-dom"
 import App from "../pages/App"
-import SignUpPage from '../pages/SignUp/SignUpPage'
-export default class SignUpPage extends Component{
+
+export default class SignUp extends Component{
     render(){
         return (
             <Router>
