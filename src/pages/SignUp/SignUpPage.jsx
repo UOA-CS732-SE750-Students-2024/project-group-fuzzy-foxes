@@ -4,7 +4,7 @@ function RegisterPage() {
     username: '',
     email: '',
     password: '',
-    confirm_password: '',
+    confirm_password:'',
   });
   const [error, setError] = useState('');
 
@@ -19,7 +19,8 @@ function RegisterPage() {
         setError("The passwords you entered twice do not match");
         return;
     }
-    console.log(formData);
+    const {confirm_password,...dataToSubmit} = formData;
+    console.log(dataToSubmit);
     setError('');
     // 这里可以加上发送数据到后端的代码
   };
@@ -52,7 +53,7 @@ function RegisterPage() {
                 <input type = "password" name="confirm_password" value={formData.confirm_password} onChange={handleChange} required/>
             </label>
         </div>
-        {error && <p className='error'></p>}
+        {error && <p className='error'>{error}</p>}
         <div>
           <button type="submit">SUBMIT</button>
         </div>
