@@ -2,6 +2,8 @@ import express from "express";
 import { GoogleTrend } from "../data/googleTrendSchema.js";
 import { HistoryToday } from "../data/historyinTodaySchema.js";
 import { TodayWeather } from "../data/TodayWeatherSchema.js";
+import { TwitterTrend } from "../data/twitterTrendSchema.js";
+import { aiNews } from "../data/ainewsSchema.js";
 
 const router = express.Router();
 
@@ -32,5 +34,22 @@ router.get('/TodayWeathers', async function (req, res) {
   }
 });
 
+router.get('/twitterTrends', async function (req, res) {
+  try {
+      const trends = await TwitterTrend.find().limit(20)
+      return res.status(200).send({results: trends});
+  } catch(err) {
+      res.status(500).json({ error: 'Error getting twitter trends' });
+  }
+});
+
+router.get('/aiNews', async function (req, res) {
+  try {
+      const news = await aiNews.find().limit(20)
+      return res.status(200).send({results: news});
+  } catch(err) {
+      res.status(500).json({ error: 'Error getting latest news' });
+  }
+});
 
 export default router;

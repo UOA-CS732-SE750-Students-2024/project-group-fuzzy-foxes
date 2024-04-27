@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import { GoogleTrend } from "./googleTrendSchema.js";
 import { HistoryToday } from "./historyinTodaySchema.js";
 import { TodayWeather } from "./TodayWeatherSchema.js";
+import { TwitterTrend } from "./twitterTrendSchema.js";
+import { aiNews } from "./ainewsSchema.js";
 var mongodb_url = "mongodb://127.0.0.1:27017/hotspot";
 
 // This is a standalone program which will populate the database with initial data.
@@ -19,8 +21,6 @@ async function run() {
   database.once('connected', () => {
     console.log('Database Connected');
 })
-getTodayWeather();
-
 
 }
 
@@ -91,8 +91,72 @@ function getTodayWeather(){
       })
 }
 
+function getTwitterTrend() {
+    let yourDate = new Date()
+    yourDate.toISOString().split('T')[0]
+    axios.post('https://twitter-trends5.p.rapidapi.com/twitter/request.php', 
+    {
+        'woeid':'23424977'
+    },
+    {
+        headers: { 
+            'content-type': 'application/x-www-form-urlencoded',
+            'X-RapidAPI-Key': 'd952733307msh6f314aa3def483cp1d0f0ajsn31a88a154bdc',
+            'X-RapidAPI-Host': 'twitter-trends5.p.rapidapi.com'
+        }
+    })
+        .then(response => {
+            
+            const results = response.data.trends;
+            // console.log(results);
+            for (let i = 0; i < 20; i++) {
+                var index = i+'';
+                var result = results[index];
+                const spot = new TwitterTrend({
+                    source: 'Twitter Trend',
+                    name: result.name,
+                    volumeShort: result.volumeShort,
+                    domainContext: result.domainContext
+                })
+                spot.save();
+                
+            }
+        })
+}
+
+function getaiNews() {
+    axios.get('https://ai-news-api.p.rapidapi.com/news',
+        {
+        headers: { 
+            'X-RapidAPI-Key': 'd952733307msh6f314aa3def483cp1d0f0ajsn31a88a154bdc',
+            'X-RapidAPI-Host': 'ai-news-api.p.rapidapi.com'
+         }
+        })
+        .then( response => {
+            console.log(response.data);
+            const results = response.data;
+
+            var count = 0;
+            results.forEach(result => {
+                if (count > 20) {
+                    return;
+                }
+                const spot = new aiNews({
+                    source: 'ai News',
+                    title: result.title,
+                    url: result.url
+                })
+                count++;
+                spot.save();
+            });
+
+        })
+}
 function getAllNews() {
   getGoogleTrend();
   getTodayInHistory();
+  getTwitterTrend();
+  getTodayWeather();
+  getaiNews();
 }
 run();
