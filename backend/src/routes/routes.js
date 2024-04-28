@@ -4,6 +4,7 @@ import { HistoryToday } from "../data/historyinTodaySchema.js";
 import { TodayWeather } from "../data/TodayWeatherSchema.js";
 import { TwitterTrend } from "../data/twitterTrendSchema.js";
 import { aiNews } from "../data/ainewsSchema.js";
+import { NewsDataIo } from "../data/newsdataIOSchema.js";
 
 const router = express.Router();
 
@@ -75,6 +76,26 @@ router.get("/aiNews", async function (req, res) {
     res.status(500).json({ error: "Error getting latest news" });
   }
 });
+
+
+router.get("/newsdataIO", async function (req, res) {
+  try {
+    const news = await NewsDataIo.find().limit(20);
+    const result = {
+      data: {
+        list: news,
+        total: news.length,
+      },
+      msg: "Request successful",
+      code: 200,
+    };
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Error getting latest news" });
+  }
+});
+
+
 
 export default router;
 

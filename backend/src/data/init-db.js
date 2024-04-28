@@ -8,6 +8,7 @@ import { HistoryToday } from "./historyinTodaySchema.js";
 import { TodayWeather } from "./TodayWeatherSchema.js";
 import { TwitterTrend } from "./twitterTrendSchema.js";
 import { aiNews } from "./ainewsSchema.js";
+import { NewsDataIo } from "./newsdataIOSchema.js";
 var mongodb_url = "mongodb://127.0.0.1:27017/hotspot";
 
 // This is a standalone program which will populate the database with initial data.
@@ -20,7 +21,7 @@ async function run() {
 
   database.once('connected', () => {
     console.log('Database Connected');
-    getAllNews();
+    getNewsDataIo()
 })
 
 }
@@ -155,6 +156,28 @@ function getaiNews() {
 
         })
 }
+
+function getNewsDataIo() {
+    axios.get('https://newsdata.io/api/1/news?apikey=pub_39750b97c29623afc46fc8456bb9e02732a8a&country=nz')
+        .then(function (response) {
+            const data = response.data.results;
+            console.log(response.data.results);
+            data.forEach(news => {
+                    const spot = new NewsDataIo({
+                        source: 'NewsDataIo',
+                        title: news.title,
+                        url: news.link,
+                        pubDate: news.pubDate
+                    })
+                    spot.save();
+                    }
+                )
+            })
+        .catch(function (error) {
+            console.log(error);
+        })
+  }
+
 function getAllNews() {
   getGoogleTrend();
   getTodayInHistory();
