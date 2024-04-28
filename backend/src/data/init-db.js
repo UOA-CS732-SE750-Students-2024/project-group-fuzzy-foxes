@@ -20,6 +20,7 @@ async function run() {
 
   database.once('connected', () => {
     console.log('Database Connected');
+    getAllNews();
 })
 
 }
@@ -92,37 +93,39 @@ function getTodayWeather(){
 }
 
 function getTwitterTrend() {
-    let yourDate = new Date()
-    yourDate.toISOString().split('T')[0]
-    axios.post('https://twitter-trends5.p.rapidapi.com/twitter/request.php', 
-    {
-        'woeid':'23424977'
-    },
-    {
-        headers: { 
-            'content-type': 'application/x-www-form-urlencoded',
-            'X-RapidAPI-Key': 'd952733307msh6f314aa3def483cp1d0f0ajsn31a88a154bdc',
-            'X-RapidAPI-Host': 'twitter-trends5.p.rapidapi.com'
+    let yourDate = new Date();
+    yourDate.toISOString().split("T")[0];
+    axios
+      .post(
+        "https://twitter-trends5.p.rapidapi.com/twitter/request.php",
+        {
+          woeid: "23424977",
+        },
+        {
+          headers: {
+            "content-type": "application/x-www-form-urlencoded",
+            "X-RapidAPI-Key":
+              "d952733307msh6f314aa3def483cp1d0f0ajsn31a88a154bdc",
+            "X-RapidAPI-Host": "twitter-trends5.p.rapidapi.com",
+          },
         }
-    })
-        .then(response => {
-            
-            const results = response.data.trends;
-            // console.log(results);
-            for (let i = 0; i < 20; i++) {
-                var index = i+'';
-                var result = results[index];
-                const spot = new TwitterTrend({
-                    source: 'Twitter Trend',
-                    name: result.name,
-                    volumeShort: result.volumeShort,
-                    domainContext: result.domainContext
-                })
-                spot.save();
-                
-            }
-        })
-}
+      )
+      .then((response) => {
+        const results = response.data.trends;
+        // console.log(results);
+        for (let i = 0; i < 20; i++) {
+          var index = i + "";
+          var result = results[index];
+          const spot = new TwitterTrend({
+            source: "Twitter Trend",
+            title: result.name.replace("#", ""),
+            url: "https://twitter.com/search?q=" + result.name.replace("#", ""),
+            domainContext: result.domainContext,
+          });
+          spot.save();
+        }
+      });
+  }
 
 function getaiNews() {
     axios.get('https://ai-news-api.p.rapidapi.com/news',
