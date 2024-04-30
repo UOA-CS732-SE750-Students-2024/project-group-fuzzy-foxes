@@ -9,5 +9,5 @@ Your team members are:
 - Jim Xie
 - Xuechen Sun
 - Garry Li
- --
+ 
 ![](./group-image/Fuzzy%20Foxes.webp)
