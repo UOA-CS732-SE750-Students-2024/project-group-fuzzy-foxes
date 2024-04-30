@@ -23,7 +23,7 @@ async function run() {
   database.once('connected', () => {
     console.log('Database Connected');
 
-    initUserCollection()
+  
 
 })
 
@@ -181,15 +181,7 @@ function getNewsDataIo() {
         })
   }
 
-  function initUserCollection() {
-    const spot = new User({
-      username: 'testUser',
-      email: 'test@test.com',
-      password: 'a123123123'
 
-    })
-    spot.save();
-    }
 
 
 
