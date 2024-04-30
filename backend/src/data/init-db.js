@@ -9,6 +9,7 @@ import { TodayWeather } from "./TodayWeatherSchema.js";
 import { TwitterTrend } from "./twitterTrendSchema.js";
 import { aiNews } from "./ainewsSchema.js";
 import { NewsDataIo } from "./newsdataIOSchema.js";
+import { User } from "../data/userInfoSchema.js";
 var mongodb_url = "mongodb://127.0.0.1:27017/hotspot";
 
 // This is a standalone program which will populate the database with initial data.
@@ -21,7 +22,9 @@ async function run() {
 
   database.once('connected', () => {
     console.log('Database Connected');
-    getNewsDataIo()
+
+    initUserCollection()
+
 })
 
 }
@@ -178,11 +181,25 @@ function getNewsDataIo() {
         })
   }
 
+  function initUserCollection() {
+    const spot = new User({
+      username: 'testUser',
+      email: 'test@test.com',
+      password: 'a123123123'
+
+    })
+    spot.save();
+    }
+
+
+
+  
 function getAllNews() {
   getGoogleTrend();
   getTodayInHistory();
   getTwitterTrend();
   getTodayWeather();
   getaiNews();
+  getNewsDataIo()
 }
 run();
