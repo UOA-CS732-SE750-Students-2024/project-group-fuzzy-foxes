@@ -21,6 +21,11 @@ export const hotDataSource: HotListConfig[] = [
     label: "TwitterTrends",
     tip: "Hot",
   },
+  {
+    value: "newsdataIO",
+    label: "NewsDataIO",
+    tip: "Hot",
+  },
 ];
 
 /**

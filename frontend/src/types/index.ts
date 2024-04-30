@@ -1,7 +1,11 @@
 /**
  * @description: hotlist types
  */
-export type HotTypes = "googleTrends" | "aiNews" | "twitterTrends";
+export type HotTypes =
+  | "googleTrends"
+  | "aiNews"
+  | "twitterTrends"
+  | "newsdataIO";
 
 /**
  * @description: form items
