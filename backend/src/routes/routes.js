@@ -6,6 +6,9 @@ import { TwitterTrend } from "../data/twitterTrendSchema.js";
 import { aiNews } from "../data/ainewsSchema.js";
 import { NewsDataIo } from "../data/newsdataIOSchema.js";
 import { User } from "../data/userInfoSchema.js";
+import bcrypt from 'bcrypt';
+//import jwt from 'jsonwebtoken';
+
 
 const router = express.Router();
 
@@ -119,6 +122,34 @@ router.post('/register', async (req, res) => {
 });
 
 
+// User login route
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Find user by email (or you could use username, depending on your schema)
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    // Compare the provided password with the stored hashed password
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    // Generate a JWT token
+    //const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' }); , token
+
+    // Return the token to the client     
+    res.status(200).json({ message: 'Login successful' });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error'});
+  }
+});
 
 export default router;
 
