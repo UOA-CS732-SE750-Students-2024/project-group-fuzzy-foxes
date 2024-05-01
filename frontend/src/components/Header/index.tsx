@@ -7,9 +7,19 @@ import {
   Space,
   theme,
   Typography,
-  Button,
+
 } from "antd";
-import { FC, ReactNode, useMemo } from "react";
+
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  TextField
+} from '@mui/material';
+
+import { FC, ReactNode, useMemo, useState } from "react";
 
 import Logo from "../../assets/logo.png";
 
@@ -27,7 +37,24 @@ const Header: FC<HeaderProps> = ({ children }) => {
   const { token } = useToken();
   // Get responsive information。
   const { md } = useResponsive();
+  const [openLoginDialog, setOpenLoginDialog] = useState(false);
+  const [openRegisterDialog, setOpenRegisterDialog] = useState(false);
 
+  const handleOpenLoginDialog = () => {
+    setOpenLoginDialog(true);
+  };
+
+  const handleCloseLoginDialog = () => {
+    setOpenLoginDialog(false);
+  };
+
+  const handleOpenRegisterDialog = () => {
+    setOpenRegisterDialog(true);
+  };
+
+  const handleCloseRegisterDialog = () => {
+    setOpenRegisterDialog(false);
+  };
   /**
    * @description:Render subtext
    */
@@ -71,8 +98,8 @@ const Header: FC<HeaderProps> = ({ children }) => {
 
   const renderButtons = (
     <Space>
-      <Button>Login</Button>
-      <Button>Signup</Button>
+      <Button onClick={handleOpenLoginDialog}>Login</Button>
+      <Button onClick={handleOpenRegisterDialog}>Signup</Button>
     </Space>
   );
 
@@ -111,7 +138,35 @@ const Header: FC<HeaderProps> = ({ children }) => {
           </Col>
         </Row>
       )}
+      <Dialog open={openLoginDialog} onClose={handleCloseLoginDialog}>
+        <DialogTitle>Login</DialogTitle>
+        <DialogContent>
+          <TextField autoFocus margin="dense" label="Username" type="text" fullWidth />
+          <TextField margin="dense" label="Password" type="password" fullWidth />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseLoginDialog}>Cancel</Button>
+          <Button onClick={handleCloseLoginDialog} variant="contained" color="primary">
+            Login
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openRegisterDialog} onClose={handleCloseRegisterDialog}>
+        <DialogTitle>Sign up</DialogTitle>
+        <DialogContent>
+          <TextField autoFocus margin="dense" label="Username" type="text" fullWidth />
+          <TextField margin="dense" label="Password" type="password" fullWidth />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseRegisterDialog}>Cancel</Button>
+          <Button onClick={handleCloseRegisterDialog} variant="contained" color="primary">
+            Sign up
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
+
+
   );
 };
 
