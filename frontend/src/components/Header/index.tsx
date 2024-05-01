@@ -39,6 +39,13 @@ const Header: FC<HeaderProps> = ({ children }) => {
   const { md } = useResponsive();
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const [openRegisterDialog, setOpenRegisterDialog] = useState(false);
+  //我加的新的内容
+  const [emailError, setEmailError] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
 
   const handleOpenLoginDialog = () => {
     setOpenLoginDialog(true);
@@ -55,6 +62,41 @@ const Header: FC<HeaderProps> = ({ children }) => {
   const handleCloseRegisterDialog = () => {
     setOpenRegisterDialog(false);
   };
+  //我加的新的内容
+  const handleLoginSubmit = () => {
+    return;
+  };//如果全部通过就提交
+  const handleRegisterSubmit = () => {
+    setEmailError('');
+    setPasswordError('');
+    setConfirmPasswordError('');
+    if (!validatePassword(password)) {
+      setPasswordError('Password must include at least one uppercase letter, one lowercase letter, and must be at least 8 characters long without special symbols.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setConfirmPasswordError('Passwords do not match.');
+      return; 
+    }
+    if (!validateEmail(email)){
+      setEmailError("It is not correct email format.");
+      return;
+    }else{
+      handleCloseRegisterDialog();
+      console.log("Registration successful!");}
+    
+  };
+  //我加的新的内容
+  const validatePassword = (password: string) => {
+    return /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?!.*[_\W]).{8,}/.test(password);
+  };//判断这个密码是不是复合包含至少一个大小写，并且至少八位数
+
+  //我加的新的内容
+  const validateEmail = (email:string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+
   /**
    * @description:Render subtext
    */
@@ -63,7 +105,6 @@ const Header: FC<HeaderProps> = ({ children }) => {
       {text}
     </Text>
   );
-
   /**
    * @description: render logo and title
    */
@@ -111,6 +152,7 @@ const Header: FC<HeaderProps> = ({ children }) => {
         boxShadow: token.boxShadowTertiary,
       }}
     >
+      
       {md ? (
         <Row align="middle">
           {/* title */}
@@ -142,7 +184,7 @@ const Header: FC<HeaderProps> = ({ children }) => {
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
           <TextField autoFocus margin="dense" label="Username" type="text" fullWidth />
-          <TextField margin="dense" label="Password" type="password" fullWidth />
+          <TextField margin="dense" label="Password" type="password" fullWidth onChange={(e) => setPassword(e.target.value)}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseLoginDialog}>Cancel</Button>
@@ -155,11 +197,14 @@ const Header: FC<HeaderProps> = ({ children }) => {
         <DialogTitle>Sign up</DialogTitle>
         <DialogContent>
           <TextField autoFocus margin="dense" label="Username" type="text" fullWidth />
-          <TextField margin="dense" label="Password" type="password" fullWidth />
+          <TextField margin="dense" label="Password" type="password" fullWidth onChange={(e) => setPassword(e.target.value)} error={!!passwordError} helperText={passwordError}/>
+          <TextField margin="dense" label="Confirm Password" type="confirmpassword" fullWidth onChange={(e) => setConfirmPassword(e.target.value)} error={!!confirmPasswordError} helperText={confirmPasswordError}/>
+          <TextField margin='dense' label="Email" type="email" fullWidth onChange={(e) => setEmail(e.target.value)} error={!!emailError}  helperText={emailError}/>
         </DialogContent>
         <DialogActions>
+          {/*这我也改了逻辑*/ }
           <Button onClick={handleCloseRegisterDialog}>Cancel</Button>
-          <Button onClick={handleCloseRegisterDialog} variant="contained" color="primary">
+          <Button onClick={handleRegisterSubmit} variant="contained" color="primary">
             Sign up
           </Button>
         </DialogActions>
