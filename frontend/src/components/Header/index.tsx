@@ -46,6 +46,8 @@ const Header: FC<HeaderProps> = ({ children }) => {
   const [passwordError, setPasswordError] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [usernameError, setUsernameError] = useState('');
 
   const handleOpenLoginDialog = () => {
     setOpenLoginDialog(true);
@@ -66,10 +68,11 @@ const Header: FC<HeaderProps> = ({ children }) => {
   const handleLoginSubmit = () => {
     return;
   };//如果全部通过就提交
-  const handleRegisterSubmit = () => {
+  const handleRegisterSubmit = async() => {
     setEmailError('');
     setPasswordError('');
     setConfirmPasswordError('');
+    setUsernameError('');
     if (!validatePassword(password)) {
       setPasswordError('Password must include at least one uppercase letter, one lowercase letter, and must be at least 8 characters long without special symbols.');
       return;
@@ -81,10 +84,20 @@ const Header: FC<HeaderProps> = ({ children }) => {
     if (!validateEmail(email)){
       setEmailError("It is not correct email format.");
       return;
-    }else{
-      handleCloseRegisterDialog();
-      console.log("Registration successful!");}
-    
+    }
+    if (!validateUsername(username)) {
+      setUsernameError('Username must be at least 4 characters long and contain only alphanumeric characters.');
+      return;
+    }
+  
+    const isAvailable = await checkUsernameAvailability(username);
+    if (!isAvailable) {
+      setUsernameError('Username is already taken.');
+      return;
+    }
+    handleCloseRegisterDialog();
+    console.log("Registration successful!");
+      //这一块儿得换成提交到后端的代码
   };
   //我加的新的内容
   const validatePassword = (password: string) => {
@@ -96,6 +109,29 @@ const Header: FC<HeaderProps> = ({ children }) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
+  const validateUsername = (username: string) => {
+    const usernameRegex = /^[a-zA-Z\d]{4,}$/;
+    return usernameRegex.test(username);
+  };
+  
+  const checkUsernameAvailability = async (username: string) => {
+    try {
+      const response = await fetch('/api/username-check', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+      });
+      const data = await response.json();
+      return data.isAvailable; // 假设后端返回一个包含isAvailable布尔字段的对象
+    } catch (error) {
+      console.error('Error checking username availability:', error);
+      return false; // 在发生错误时默认为不可用
+    }
+  };
+  
+  //判断EMAIL是不是符合EMAIL规范
 
   /**
    * @description:Render subtext
