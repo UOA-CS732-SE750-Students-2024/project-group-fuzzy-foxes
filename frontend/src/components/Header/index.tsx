@@ -24,6 +24,7 @@ import { FC, ReactNode, useMemo, useState } from "react";
 import Logo from "../../assets/logo.png";
 
 import RealTime from "./RealTime";
+import axios from "axios";
 
 const { Title, Text } = Typography;
 
@@ -89,14 +90,25 @@ const Header: FC<HeaderProps> = ({ children }) => {
       setUsernameError('Username must be at least 4 characters long and contain only alphanumeric characters.');
       return;
     }
-  
-    const isAvailable = await checkUsernameAvailability(username);
-    if (!isAvailable) {
-      setUsernameError('Username is already taken.');
-      return;
-    }
     handleCloseRegisterDialog();
-    console.log("Registration successful!");
+    const userData = {
+      username: username,
+      email: email,
+      password: password
+    };
+    
+    // 发送 POST 请求
+    axios.post('http://localhost:3000/register', userData)
+      .then(response => {
+        if (response.data = 'User registered successfully'){
+          alert('User registered successfully')
+          //注册成功后会发生的事
+        }
+        if (response.data = 'Username or email already exists'){
+          alert(response.data)
+        }
+        // 在这里处理响应数据
+      });
       //这一块儿得换成提交到后端的代码
   };
   //我加的新的内容
@@ -114,22 +126,6 @@ const Header: FC<HeaderProps> = ({ children }) => {
     return usernameRegex.test(username);
   };
   
-  const checkUsernameAvailability = async (username: string) => {
-    try {
-      const response = await fetch('/api/username-check', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username }),
-      });
-      const data = await response.json();
-      return data.isAvailable; // 假设后端返回一个包含isAvailable布尔字段的对象
-    } catch (error) {
-      console.error('Error checking username availability:', error);
-      return false; // 在发生错误时默认为不可用
-    }
-  };
   
   //判断EMAIL是不是符合EMAIL规范
 
@@ -232,7 +228,7 @@ const Header: FC<HeaderProps> = ({ children }) => {
       <Dialog open={openRegisterDialog} onClose={handleCloseRegisterDialog}>
         <DialogTitle>Sign up</DialogTitle>
         <DialogContent>
-          <TextField autoFocus margin="dense" label="Username" type="text" fullWidth />
+          <TextField autoFocus margin="dense" label="Username" type="text" fullWidth onChange={(e) => setUsername(e.target.value)} error={!!usernameError} helperText={usernameError}/>
           <TextField margin="dense" label="Password" type="password" fullWidth onChange={(e) => setPassword(e.target.value)} error={!!passwordError} helperText={passwordError}/>
           <TextField margin="dense" label="Confirm Password" type="confirmpassword" fullWidth onChange={(e) => setConfirmPassword(e.target.value)} error={!!confirmPasswordError} helperText={confirmPasswordError}/>
           <TextField margin='dense' label="Email" type="email" fullWidth onChange={(e) => setEmail(e.target.value)} error={!!emailError}  helperText={emailError}/>
