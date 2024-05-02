@@ -79,18 +79,19 @@ const Header: FC<HeaderProps> = ({ children }) => {
     }
     axios.post('http://localhost:3000/login', loginData)
       .then(response => {
-        setLoginError('');
+        setLoginUsernameError('');
+        setLoginPasswordError('');
         setLoginPassword('');
         setLoginUsername('');
-        if (response.data = 'User not found'){
+        if (response.data === 'User not found'){
           setLoginUsernameError("User not found");
           return;
         }
-        if (response.data = "Incorrect password"){
+        if (response.data === "Incorrect password"){
           setLoginPasswordError("Your password is not correct.");
           return;
         }
-        if (response.data = "Login successful"){
+        if (response.data === "Login successful"){
           alert(response.data)
           setLoginUsernameError('');
           setLoginPasswordError('');
@@ -137,10 +138,10 @@ const Header: FC<HeaderProps> = ({ children }) => {
         setPasswordError('');
         setConfirmPasswordError('');
         setUsernameError('');
-        if (response.data = 'Username or email already exists'){
+        if (response.data === 'Username or email already exists'){
           setUsernameError(response.data)
         }
-        if (response.data = "'User registered successfully'"){
+        if (response.data === "'User registered successfully'"){
           setEmailError('');
           setPasswordError('');
           setConfirmPasswordError('');
