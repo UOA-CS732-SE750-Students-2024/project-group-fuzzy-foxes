@@ -49,9 +49,11 @@ const Header: FC<HeaderProps> = ({ children }) => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [usernameError, setUsernameError] = useState('');
+  //登录
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-  const [loginError, setLoginError] = useState('');
+  const [loginUsernameError, setLoginUsernameError] = useState('');
+  const [loginPasswordError, setLoginPasswordError] = useState('');
 
   const handleOpenLoginDialog = () => {
     setOpenLoginDialog(true);
@@ -80,15 +82,20 @@ const Header: FC<HeaderProps> = ({ children }) => {
         setLoginError('');
         setLoginPassword('');
         setLoginUsername('');
-        setLoginError('');
         if (response.data = 'User not found'){
-          setLoginError(response.data)
+          setLoginUsernameError("User not found");
+          return;
         }
         if (response.data = "Incorrect password"){
-          setLoginError(response.data)
+          setLoginPasswordError("Your password is not correct.");
+          return;
         }
         if (response.data = "Login successful"){
           alert(response.data)
+          setLoginUsernameError('');
+          setLoginPasswordError('');
+          setLoginPassword('');
+          setLoginUsername('');
           handleCloseLoginDialog();
         }
         
@@ -130,14 +137,14 @@ const Header: FC<HeaderProps> = ({ children }) => {
         setPasswordError('');
         setConfirmPasswordError('');
         setUsernameError('');
-        if (response.data = 'User registered successfully'){
-          alert('User registered successfully')
-          //注册成功后会发生的事
-        }
         if (response.data = 'Username or email already exists'){
           setUsernameError(response.data)
         }
         if (response.data = "'User registered successfully'"){
+          setEmailError('');
+          setPasswordError('');
+          setConfirmPasswordError('');
+          setUsernameError('');
           alert("You have registed successfully!")
         }
         // 在这里处理响应数据
@@ -249,8 +256,8 @@ const Header: FC<HeaderProps> = ({ children }) => {
       <Dialog open={openLoginDialog} onClose={handleCloseLoginDialog}>
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
-          <TextField autoFocus margin="dense" label="Username" type="text" fullWidth onChange={(e) => setLoginUsername(e.target.value)} error={!!loginError} helperText={loginError}/>
-          <TextField margin="dense" label="Password" type="password" fullWidth onChange={(e) => setLoginPassword(e.target.value)} error={!!loginError} helperText={loginError}/>
+          <TextField autoFocus margin="dense" label="Username" type="text" fullWidth onChange={(e) => setLoginUsername(e.target.value)} error={!!loginUsernameError} helperText={loginUsernameError}/>
+          <TextField margin="dense" label="Password" type="password" fullWidth onChange={(e) => setLoginPassword(e.target.value)} error={!!loginPasswordError} helperText={loginPasswordError}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseLoginDialog}>Cancel</Button>
