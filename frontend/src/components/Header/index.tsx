@@ -49,6 +49,9 @@ const Header: FC<HeaderProps> = ({ children }) => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [usernameError, setUsernameError] = useState('');
+  const [loginUsername, setLoginUsername] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
 
   const handleOpenLoginDialog = () => {
     setOpenLoginDialog(true);
@@ -67,7 +70,25 @@ const Header: FC<HeaderProps> = ({ children }) => {
   };
   //我加的新的内容
   const handleLoginSubmit = () => {
-    return;
+    const loginData ={
+        username:username,
+        password:password,
+    }
+    axios.post('http://localhost:3000/login', loginData)
+      .then(response => {
+        setLoginError('');
+        if (response.data = 'User not found'){
+          setLoginError(response.data)
+        }
+        if (response.data = "Incorrect password"){
+          setLoginError(response.data)
+        }
+        if (response.data = "Login successful"){
+          alert(response.data)
+        }
+        
+        // 在这里处理响应数据
+      });
   };//如果全部通过就提交
   const handleRegisterSubmit = async() => {
     setEmailError('');
@@ -100,17 +121,25 @@ const Header: FC<HeaderProps> = ({ children }) => {
     // 发送 POST 请求
     axios.post('http://localhost:3000/register', userData)
       .then(response => {
+        setEmailError('');
+        setPasswordError('');
+        setConfirmPasswordError('');
+        setUsernameError('');
         if (response.data = 'User registered successfully'){
           alert('User registered successfully')
           //注册成功后会发生的事
         }
         if (response.data = 'Username or email already exists'){
-          alert(response.data)
+          setUsernameError(response.data)
+        }
+        if (response.data = "'User registered successfully'"){
+          alert("You have registed successfully!")
         }
         // 在这里处理响应数据
       });
+    };
+      
       //这一块儿得换成提交到后端的代码
-  };
   //我加的新的内容
   const validatePassword = (password: string) => {
     return /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?!.*[_\W]).{8,}/.test(password);
@@ -215,12 +244,12 @@ const Header: FC<HeaderProps> = ({ children }) => {
       <Dialog open={openLoginDialog} onClose={handleCloseLoginDialog}>
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
-          <TextField autoFocus margin="dense" label="Username" type="text" fullWidth />
-          <TextField margin="dense" label="Password" type="password" fullWidth onChange={(e) => setPassword(e.target.value)}/>
+          <TextField autoFocus margin="dense" label="Username" type="text" fullWidth onChange={(e) => setLoginUsername(e.target.value)}/>
+          <TextField margin="dense" label="Password" type="password" fullWidth onChange={(e) => setLoginPassword(e.target.value)}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseLoginDialog}>Cancel</Button>
-          <Button onClick={handleCloseLoginDialog} variant="contained" color="primary">
+          <Button onClick={handleLoginSubmit} variant="contained" color="primary">
             Login
           </Button>
         </DialogActions>
