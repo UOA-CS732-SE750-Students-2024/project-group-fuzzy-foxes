@@ -55,6 +55,7 @@ const Header: FC<HeaderProps> = ({ children }) => {
 
   const handleOpenLoginDialog = () => {
     setOpenLoginDialog(true);
+    
   };
 
   const handleCloseLoginDialog = () => {
@@ -71,11 +72,14 @@ const Header: FC<HeaderProps> = ({ children }) => {
   //我加的新的内容
   const handleLoginSubmit = () => {
     const loginData ={
-        username:username,
-        password:password,
+        username:loginUsername,
+        password:loginPassword,
     }
     axios.post('http://localhost:3000/login', loginData)
       .then(response => {
+        setLoginError('');
+        setLoginPassword('');
+        setLoginUsername('');
         setLoginError('');
         if (response.data = 'User not found'){
           setLoginError(response.data)
@@ -85,6 +89,7 @@ const Header: FC<HeaderProps> = ({ children }) => {
         }
         if (response.data = "Login successful"){
           alert(response.data)
+          handleCloseLoginDialog();
         }
         
         // 在这里处理响应数据
@@ -244,8 +249,8 @@ const Header: FC<HeaderProps> = ({ children }) => {
       <Dialog open={openLoginDialog} onClose={handleCloseLoginDialog}>
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
-          <TextField autoFocus margin="dense" label="Username" type="text" fullWidth onChange={(e) => setLoginUsername(e.target.value)}/>
-          <TextField margin="dense" label="Password" type="password" fullWidth onChange={(e) => setLoginPassword(e.target.value)}/>
+          <TextField autoFocus margin="dense" label="Username" type="text" fullWidth onChange={(e) => setLoginUsername(e.target.value)} error={!!loginError} helperText={loginError}/>
+          <TextField margin="dense" label="Password" type="password" fullWidth onChange={(e) => setLoginPassword(e.target.value)} error={!!loginError} helperText={loginError}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseLoginDialog}>Cancel</Button>
