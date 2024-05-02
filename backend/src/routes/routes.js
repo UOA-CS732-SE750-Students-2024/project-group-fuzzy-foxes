@@ -99,26 +99,34 @@ router.get("/newsdataIO", async function (req, res) {
 
 // User registration route
 router.post('/register', async (req, res) => {
-  const { username, email, password, confirmPassword } = req.body;
-
-  if (password !== confirmPassword) {
-    return res.status(400).json({ error: 'Passwords do not match' });
-  }
+  const { username, email, password, } = req.body;
 
   try {
     const newUser = new User({ username, email, password });
     await newUser.save(); // Save the new user to MongoDB
-    res.status(201).json({ message: 'User registered successfully' });
+    res.send('User registered successfully');
   } catch (error) {
     if (error.code === 11000) {
-      res.status(400).json({ error: 'Username or email already exists' });
-    } else {
-      res.status(500).json({ error: 'Internal server error' });
-    }
+      res.send('Username or email already exists' );
+    } 
   }
 });
 
-
+router.post('/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.send('User not found');
+    }
+    if (password !== user.password) {
+      return res.send('Incorrect password');
+    }
+    res.send('Login successful');
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
 export default router;
 
