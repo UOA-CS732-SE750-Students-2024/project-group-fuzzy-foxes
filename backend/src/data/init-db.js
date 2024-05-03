@@ -23,7 +23,10 @@ async function run() {
   database.once('connected', () => {
     console.log('Database Connected');
 
-    initUserCollection()
+    // Do a get after start
+    getAllNews();
+    // Then do one get every 24 hours
+  //setScheduledTask(4, 0, getAllNews);
 
 })
 
@@ -180,16 +183,19 @@ function getNewsDataIo() {
             console.log(error);
         })
   }
+  // Excute tasks regularly
+function setScheduledTask(hour, minute, callTask) {
+  let taskTime = new Date();
+  taskTime.setHours(hour);
+  taskTime.setMinutes(minute);
+  let timeDiff = taskTime.getTime() - (new Date()).getTime(); // get time diff
+  timeDiff = timeDiff > 0 ? timeDiff : (timeDiff + 24 * 60 * 60 * 1000);
+  setTimeout(function() {
+      callTask(); 
+      setInterval(callTask, 24 * 60 * 60 * 1000); // 24 hours
+  }, timeDiff); 
+}
 
-  function initUserCollection() {
-    const spot = new User({
-      username: 'testUser',
-      email: 'test@test.com',
-      password: 'a123123123'
-
-    })
-    spot.save();
-    }
 
 
 
