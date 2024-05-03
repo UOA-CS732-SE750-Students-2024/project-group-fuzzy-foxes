@@ -19,7 +19,7 @@ import {
   TextField
 } from '@mui/material';
 
-import { FC, ReactNode, useMemo, useState } from "react";
+import { FC, ReactNode, useMemo, useState, Dispatch, SetStateAction } from "react";
 
 import Logo from "../../assets/logo.png";
 
@@ -32,9 +32,11 @@ const { useToken } = theme;
 
 type HeaderProps = {
   children: ReactNode;
+  isLoggedIn: boolean;
+  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
 };
 
-const Header: FC<HeaderProps> = ({ children }) => {
+const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
   const { token } = useToken();
   // Get responsive information。
   const { md } = useResponsive();
@@ -56,8 +58,15 @@ const Header: FC<HeaderProps> = ({ children }) => {
   const [loginPasswordError, setLoginPasswordError] = useState('');
 
   const handleOpenLoginDialog = () => {
-    setOpenLoginDialog(true);
+    if (isLoggedIn) {
+      handleLogout();
+    } else {
+      setOpenLoginDialog(true);
+    }
     
+  };
+  const handleLogout = () => {
+    setIsLoggedIn(false);
   };
 
   const handleCloseLoginDialog = () => {
@@ -92,7 +101,8 @@ const Header: FC<HeaderProps> = ({ children }) => {
           return;
         }
         if (response.data === "Login successful"){
-          alert(response.data)
+          setIsLoggedIn(true);
+          alert("Login successful");
           setLoginUsernameError('');
           setLoginPasswordError('');
           setLoginPassword('');
@@ -213,7 +223,7 @@ const Header: FC<HeaderProps> = ({ children }) => {
 
   const renderButtons = (
     <Space>
-      <Button onClick={handleOpenLoginDialog}>Login</Button>
+      <Button onClick={handleOpenLoginDialog}>{isLoggedIn ? 'LogOff' : 'LogIn'}</Button>
       <Button onClick={handleOpenRegisterDialog}>Signup</Button>
     </Space>
   );
