@@ -6,6 +6,7 @@ import type { HotListConfig } from "@/types";
 
 import HotList from "./HotList";
 import Weather from "./Weather";
+import BasketballMatchInfo from "./BasketballMatchInfo";
 
 type HotContainerProps = {
   primaryColor: string;
@@ -61,7 +62,7 @@ const HotContainer: FC<HotContainerProps> = ({
             padding: "1rem",
           }}
         >
-          Content 1
+          <BasketballMatchInfo />
         </div>
 
         {/* Second */}
