@@ -118,6 +118,7 @@ router.get("/basketballGames", async function (req, res) {
   }
 });
 
+
 // User registration route
 router.post('/register', async (req, res) => {
   const { username, email, password, confirmPassword } = req.body;

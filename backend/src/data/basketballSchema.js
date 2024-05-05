@@ -16,4 +16,4 @@ const basketballGamesSchema = new Schema(
 
 const basketballGames = mongoose.model('basketballGames', basketballGamesSchema, 'basketballGames');
 
-export { basketballGames };
+export { basketballGames }; 

@@ -24,7 +24,7 @@ async function run() {
   database.once('connected', () => {
     console.log('Database Connected');
 
-    getBasketballGames();
+
 
 })
 
