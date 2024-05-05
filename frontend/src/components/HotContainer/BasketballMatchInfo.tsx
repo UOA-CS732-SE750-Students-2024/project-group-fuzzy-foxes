@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./Basketball.css"
+import "./Basketball.css";
+
 
 interface Match {
   team1Logo: string;
@@ -19,11 +20,12 @@ const BasketballMatchInfo: React.FC = () => {
 
   useEffect(() => {
     //后端调用代码，暂时注释
-    /*
+
     const fetchMatches = async () => {
       try {
-        const response = await axios.get('API_ENDPOINT_HERE');
-        setMatches(response.data.matches);
+        const response = await axios.get('http://localhost:3000/basketballGames');
+        setMatches(response.data.data.list);
+        console.log(response.data.data.list);
         setLastUpdated(new Date().toLocaleTimeString());
       } catch (error) {
         console.error('Error fetching match data:', error);
@@ -31,8 +33,8 @@ const BasketballMatchInfo: React.FC = () => {
     };
 
     fetchMatches();
-    */
 
+    /*
     //使用模拟数据
     setMatches(mockMatches);
     setLastUpdated(new Date().toLocaleTimeString());
@@ -42,10 +44,8 @@ const BasketballMatchInfo: React.FC = () => {
       }, 60000); // 每分钟更新一次
 
     //后端调用代码
-    /*
-    const intervalId = setInterval(fetchMatches, 60000); // 每分钟更新一次
     */
-
+    const intervalId = setInterval(fetchMatches, 60000); // 每分钟更新一次
     return () => clearInterval(intervalId);
   }, []);
 
@@ -75,11 +75,6 @@ const BasketballMatchInfo: React.FC = () => {
   );
   
   
-  
-  
-  
-  
-  
 };
 
 export default BasketballMatchInfo;
@@ -87,7 +82,7 @@ export default BasketballMatchInfo;
 
 
 
-
+/*
 //模拟的后端数据
 const mockMatches: Match[] = [
     {
@@ -131,3 +126,4 @@ const mockMatches: Match[] = [
       matchTime: '2024-05-05 19:00'
     },
   ];
+  */
