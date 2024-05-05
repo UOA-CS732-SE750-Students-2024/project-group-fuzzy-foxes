@@ -9,7 +9,6 @@ import { TodayWeather } from "./TodayWeatherSchema.js";
 import { TwitterTrend } from "./twitterTrendSchema.js";
 import { aiNews } from "./ainewsSchema.js";
 import { NewsDataIo } from "./newsdataIOSchema.js";
-import { basketballGames } from "./basketballSchema.js";
 import { User } from "../data/userInfoSchema.js";
 var mongodb_url = "mongodb://127.0.0.1:27017/hotspot";
 
@@ -24,7 +23,7 @@ async function run() {
   database.once('connected', () => {
     console.log('Database Connected');
 
-    getBasketballGames();
+  
 
 })
 
@@ -183,44 +182,7 @@ function getNewsDataIo() {
   }
 
 
-  function getBasketballGames() {
-    const currentDate = new Date().toISOString().split('T')[0];
-    axios.get('https://api-basketball.p.rapidapi.com/games',
-          {
-          params: {
-            timezone: 'Pacific/Auckland',
-            season: '2023-2024',
-            league: '12',
-            date: currentDate
-          },
-          headers: {
-            'X-RapidAPI-Key': '7fc5fae20cmsha2e70afcb71644dp13f69djsn471b97c2054c',
-            'X-RapidAPI-Host': 'api-basketball.p.rapidapi.com'
-          }
-          })
-            .then(function (response) {
-            const data = response.data.response
-            console.log(response.data.response);
-            data.forEach(item => {
-              const spot = new basketballGames({
-                source: 'Basketball Games',
-                matchTime: item.date,
-                status: item.status.long,
 
-                team1Logo: item.teams.home.logo,
-                team2Logo: item.teams.away.logo,
-                team1: item.teams.home.name,
-                team2: item.teams.away.name,
-                score1: item.scores.home.total,
-                score2: item.scores.away.total
-                })
-                spot.save();
-                })
-            })
-        .catch(function (error) {
-            console.log(error);
-        })
-  }
 
 
   
@@ -230,7 +192,6 @@ function getAllNews() {
   getTwitterTrend();
   getTodayWeather();
   getaiNews();
-  getNewsDataIo();
-  getBasketballGames();
+  getNewsDataIo()
 }
 run();
