@@ -1,0 +1,39 @@
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h2 {
+  color: #333;
+}
+
+.advice {
+  font-size: 13px;
+  margin-bottom: 20px;
+  border: 1px solid #ebe5dd; /* Add border style for <p> element */
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #a9957d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #a68b5b;
+}
+
+.message {
+  font-size: 16px;
+  color: #666;
+}

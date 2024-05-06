@@ -6,6 +6,7 @@ import type { HotListConfig } from "@/types";
 
 import HotList from "./HotList";
 import Weather from "./Weather";
+import GetAdvice from "./GetAdvice";
 
 type HotContainerProps = {
   primaryColor: string;
@@ -72,6 +73,7 @@ const HotContainer: FC<HotContainerProps> = ({
           }}
         >
           <Weather />
+          <GetAdvice />
         </div>
 
         {/* Third */}
