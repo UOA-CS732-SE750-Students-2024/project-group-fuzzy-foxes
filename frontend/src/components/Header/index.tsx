@@ -7,7 +7,6 @@ import {
   Space,
   theme,
   Typography,
-
 } from "antd";
 
 import {
@@ -16,10 +15,17 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  TextField
-} from '@mui/material';
+  TextField,
+} from "@mui/material";
 
-import { FC, ReactNode, useMemo, useState, Dispatch, SetStateAction } from "react";
+import {
+  FC,
+  ReactNode,
+  useMemo,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
 import Logo from "../../assets/logo.png";
 
@@ -42,20 +48,20 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
   const { md } = useResponsive();
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const [openRegisterDialog, setOpenRegisterDialog] = useState(false);
-  //我加的新的内容
-  const [emailError, setEmailError] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [usernameError, setUsernameError] = useState('');
-  //登录
-  const [loginUsername, setLoginUsername] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-  const [loginUsernameError, setLoginUsernameError] = useState('');
-  const [loginPasswordError, setLoginPasswordError] = useState('');
+  //register verify
+  const [emailError, setEmailError] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  //login
+  const [loginUsername, setLoginUsername] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [loginUsernameError, setLoginUsernameError] = useState("");
+  const [loginPasswordError, setLoginPasswordError] = useState("");
 
   const handleOpenLoginDialog = () => {
     if (isLoggedIn) {
@@ -63,7 +69,6 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
     } else {
       setOpenLoginDialog(true);
     }
-    
   };
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -73,6 +78,37 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
     setOpenLoginDialog(false);
   };
 
+  //我加的新的内容
+  const handleLoginSubmit = () => {
+    const loginData = {
+      username: loginUsername,
+      password: loginPassword,
+    };
+    axios.post("http://localhost:3000/login", loginData).then((response) => {
+      setLoginUsernameError("");
+      setLoginPasswordError("");
+      setLoginPassword("");
+      setLoginUsername("");
+      if (response.data === "User not found") {
+        setLoginUsernameError("User not found");
+        return;
+      }
+      if (response.data === "Incorrect password") {
+        setLoginPasswordError("Your password is not correct.");
+        return;
+      }
+      if (response.data === "Login successful") {
+        setIsLoggedIn(true);
+        alert("Login successful");
+        setLoginUsernameError("");
+        setLoginPasswordError("");
+        setLoginPassword("");
+        setLoginUsername("");
+        handleCloseLoginDialog();
+      }
+    });
+  };
+  //register
   const handleOpenRegisterDialog = () => {
     setOpenRegisterDialog(true);
   };
@@ -80,96 +116,72 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
   const handleCloseRegisterDialog = () => {
     setOpenRegisterDialog(false);
   };
-  //我加的新的内容
-  const handleLoginSubmit = () => {
-    const loginData ={
-        username:loginUsername,
-        password:loginPassword,
-    }
-    axios.post('http://localhost:3000/login', loginData)
-      .then(response => {
-        setLoginUsernameError('');
-        setLoginPasswordError('');
-        setLoginPassword('');
-        setLoginUsername('');
-        if (response.data === 'User not found'){
-          setLoginUsernameError("User not found");
-          return;
-        }
-        if (response.data === "Incorrect password"){
-          setLoginPasswordError("Your password is not correct.");
-          return;
-        }
-        if (response.data === "Login successful"){
-          setIsLoggedIn(true);
-          alert("Login successful");
-          setLoginUsernameError('');
-          setLoginPasswordError('');
-          setLoginPassword('');
-          setLoginUsername('');
-          handleCloseLoginDialog();
-        }
-        
-        // 在这里处理响应数据
-      });
-  };//如果全部通过就提交
-  const handleRegisterSubmit = async() => {
-    setEmailError('');
-    setPasswordError('');
-    setConfirmPasswordError('');
-    setUsernameError('');
+  const handleRegisterSubmit = async () => {
+    setEmailError("");
+    setPasswordError("");
+    setConfirmPasswordError("");
+    setUsernameError("");
+    let isVaild = true;
     if (!validatePassword(password)) {
-      setPasswordError('Password must include at least one uppercase letter, one lowercase letter, and must be at least 8 characters long without special symbols.');
-      return;
+      setPasswordError(
+        "Password must include at least one uppercase letter, one lowercase letter, and must be at least 8 characters long without special symbols."
+      );
+      isVaild = false;
     }
     if (password !== confirmPassword) {
-      setConfirmPasswordError('Passwords do not match.');
-      return; 
+      setConfirmPasswordError("Passwords do not match.");
+      isVaild = false;
     }
-    if (!validateEmail(email)){
-      setEmailError("It is not correct email format.");
-      return;
+    if (!validateEmail(email)) {
+      setEmailError("Please input correct email format.");
+      isVaild = false;
     }
     if (!validateUsername(username)) {
-      setUsernameError('Username must be at least 4 characters long and contain only alphanumeric characters.');
+      setUsernameError(
+        "Username must be at least 4 characters long and contain only alphanumeric characters."
+      );
+      isVaild = false;
+    }
+    if (!isVaild) {
       return;
     }
     handleCloseRegisterDialog();
     const userData = {
       username: username,
       email: email,
-      password: password
+      password: password,
     };
-    
-    // 发送 POST 请求
-    axios.post('http://localhost:3000/register', userData)
-      .then(response => {
-        setEmailError('');
-        setPasswordError('');
-        setConfirmPasswordError('');
-        setUsernameError('');
-        if (response.data === 'Username or email already exists'){
-          setUsernameError(response.data)
-        }
-        if (response.data === "'User registered successfully'"){
-          setEmailError('');
-          setPasswordError('');
-          setConfirmPasswordError('');
-          setUsernameError('');
-          alert("You have registed successfully!")
-        }
-        // 在这里处理响应数据
-      });
-    };
-      
-      //这一块儿得换成提交到后端的代码
+
+    // send POST request
+    axios.post("http://localhost:3000/register", userData).then((response) => {
+      setEmailError("");
+      setPasswordError("");
+      setConfirmPasswordError("");
+      setUsernameError("");
+      if (response.data === "Username or email already exists") {
+        setUsernameError(response.data);
+      }
+      if (response.data === "'User registered successfully'") {
+        setEmailError("");
+        setPasswordError("");
+        setConfirmPasswordError("");
+        setUsernameError("");
+        alert("You have registed successfully!");
+      }
+      // deal with response data
+    });
+  };
+
+  //这一块儿得换成提交到后端的代码
   //我加的新的内容
+  //判断这个密码是不是复合包含至少一个大小写，并且至少八位数
   const validatePassword = (password: string) => {
     return /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?!.*[_\W]).{8,}/.test(password);
-  };//判断这个密码是不是复合包含至少一个大小写，并且至少八位数
+  };
 
   //我加的新的内容
-  const validateEmail = (email:string) => {
+  //判断EMAIL是不是符合EMAIL规范
+  const validateEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
@@ -177,9 +189,6 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
     const usernameRegex = /^[a-zA-Z\d]{4,}$/;
     return usernameRegex.test(username);
   };
-  
-  
-  //判断EMAIL是不是符合EMAIL规范
 
   /**
    * @description:Render subtext
@@ -223,7 +232,9 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
 
   const renderButtons = (
     <Space>
-      <Button onClick={handleOpenLoginDialog}>{isLoggedIn ? 'LogOff' : 'LogIn'}</Button>
+      <Button onClick={handleOpenLoginDialog}>
+        {isLoggedIn ? "LogOff" : "LogIn"}
+      </Button>
       <Button onClick={handleOpenRegisterDialog}>Signup</Button>
     </Space>
   );
@@ -236,7 +247,6 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
         boxShadow: token.boxShadowTertiary,
       }}
     >
-      
       {md ? (
         <Row align="middle">
           {/* title */}
@@ -249,6 +259,7 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
           {/* theme color */}
           <Col span={8}>
             {children}
+
             {renderButtons}
           </Col>
         </Row>
@@ -267,35 +278,102 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
       <Dialog open={openLoginDialog} onClose={handleCloseLoginDialog}>
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
-          <TextField autoFocus margin="dense" label="Username" type="text" fullWidth onChange={(e) => setLoginUsername(e.target.value)} error={!!loginUsernameError} helperText={loginUsernameError}/>
-          <TextField margin="dense" label="Password" type="password" fullWidth onChange={(e) => setLoginPassword(e.target.value)} error={!!loginPasswordError} helperText={loginPasswordError}/>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Username"
+            type="text"
+            fullWidth
+            onChange={(e) => setLoginUsername(e.target.value)}
+            error={!!loginUsernameError}
+            helperText={loginUsernameError}
+          />
+          <TextField
+            margin="dense"
+            label="Password"
+            type="password"
+            fullWidth
+            onChange={(e) => setLoginPassword(e.target.value)}
+            error={!!loginPasswordError}
+            helperText={loginPasswordError}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseLoginDialog}>Cancel</Button>
-          <Button onClick={handleLoginSubmit} variant="contained" color="primary">
+          <Button
+            onClick={handleLoginSubmit}
+            variant="contained"
+            color="primary"
+          >
             Login
           </Button>
         </DialogActions>
       </Dialog>
+
       <Dialog open={openRegisterDialog} onClose={handleCloseRegisterDialog}>
         <DialogTitle>Sign up</DialogTitle>
         <DialogContent>
-          <TextField autoFocus margin="dense" label="Username" type="text" fullWidth onChange={(e) => setUsername(e.target.value)} error={!!usernameError} helperText={usernameError}/>
-          <TextField margin="dense" label="Password" type="password" fullWidth onChange={(e) => setPassword(e.target.value)} error={!!passwordError} helperText={passwordError}/>
-          <TextField margin="dense" label="Confirm Password" type="confirmpassword" fullWidth onChange={(e) => setConfirmPassword(e.target.value)} error={!!confirmPasswordError} helperText={confirmPasswordError}/>
-          <TextField margin='dense' label="Email" type="email" fullWidth onChange={(e) => setEmail(e.target.value)} error={!!emailError}  helperText={emailError}/>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Username"
+            type="text"
+            fullWidth
+            onChange={(e) => setUsername(e.target.value)}
+            error={!!usernameError}
+            helperText={usernameError}
+            InputProps={{
+              placeholder: "Username: 4+ characters, alphanumeric only.",
+            }}
+          />
+          <TextField
+            margin="dense"
+            label="Password"
+            type="password"
+            fullWidth
+            onChange={(e) => setPassword(e.target.value)}
+            error={!!passwordError}
+            helperText={passwordError}
+            InputProps={{
+              placeholder:
+                "8+ characters with at least one uppercase, no symbols.",
+            }}
+          />
+          <TextField
+            margin="dense"
+            label="Confirm Password"
+            type="password"
+            fullWidth
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            error={!!confirmPasswordError}
+            helperText={confirmPasswordError}
+          />
+          <TextField
+            margin="dense"
+            label="Email"
+            type="email"
+            fullWidth
+            onChange={(e) => setEmail(e.target.value)}
+            error={!!emailError}
+            helperText={emailError}
+            InputProps={{
+              placeholder: "xxx@sample.com",
+            }}
+          />
         </DialogContent>
         <DialogActions>
-          {/*这我也改了逻辑*/ }
+          {/*这我也改了逻辑*/}
           <Button onClick={handleCloseRegisterDialog}>Cancel</Button>
-          <Button onClick={handleRegisterSubmit} variant="contained" color="primary">
+          <Button
+            onClick={handleRegisterSubmit}
+            variant="contained"
+            color="primary"
+          >
             Sign up
           </Button>
         </DialogActions>
       </Dialog>
     </div>
-
-
   );
 };
 
