@@ -1,6 +1,7 @@
 # COMPSCI 732 / SOFTENG 750 project - Team Fuzzy Foxes
 
-Welcome to the our project Trendy! I look forward to seeing your progress and your final results this semester!
+Welcome to the our project Trendy! 
+![](./frontend/src/assets/logo.png)
 
 Our team members are:
 - Feiliang Liu
