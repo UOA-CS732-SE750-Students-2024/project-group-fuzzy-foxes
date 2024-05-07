@@ -160,13 +160,14 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
       setUsernameError("");
       if (response.data === "Username or email already exists") {
         setUsernameError(response.data);
+        alert(response.data)
       }
-      if (response.data === "'User registered successfully'") {
+      if (response.data === "User registered successfully") {
+        alert(response.data);
         setEmailError("");
         setPasswordError("");
         setConfirmPasswordError("");
         setUsernameError("");
-        alert("You have registed successfully!");
       }
       // deal with response data
     });
