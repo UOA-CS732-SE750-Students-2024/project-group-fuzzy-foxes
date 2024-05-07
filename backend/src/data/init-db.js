@@ -23,7 +23,7 @@ async function run() {
     console.log('Database Connected');
 
     // Do a get after start
-    getBasketballGames();
+    getAllNews();
     // Then do one get every 24 hours
   //setScheduledTask(4, 0, getAllNews);
 
