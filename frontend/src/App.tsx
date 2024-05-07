@@ -30,6 +30,8 @@ function AppConatiner() {
   );
   // if dark mode or not
   const isDark = eq(siteTheme, THEME.DARK);
+  // login state
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   /**
    * @description: Filter hotlist that you don't like
@@ -65,7 +67,7 @@ function AppConatiner() {
       >
         <App>
           {/* Header */}
-          <Header>
+          <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
             <SwitchColor setPrimaryColor={setPrimaryColor} />
           </Header>
           {/* HotContainer */}
@@ -77,12 +79,12 @@ function AppConatiner() {
           {/* Footer */}
           <Footer />
           {/* hover button */}
-          <ActionButtons
+          {isLoggedIn && <ActionButtons
             setHotConfig={setHotConfig}
             filterHiddenHot={filterHiddenHot}
             isDark={isDark}
             setSiteTheme={setSiteTheme}
-          />
+          />}
         </App>
       </ConfigProvider>
     </>

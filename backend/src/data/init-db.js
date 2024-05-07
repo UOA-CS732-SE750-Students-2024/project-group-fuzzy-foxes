@@ -5,11 +5,10 @@ import axios from 'axios';
 import mongoose from "mongoose";
 import { GoogleTrend } from "./googleTrendSchema.js";
 import { HistoryToday } from "./historyinTodaySchema.js";
-import { TodayWeather } from "./TodayWeatherSchema.js";
 import { TwitterTrend } from "./twitterTrendSchema.js";
 import { aiNews } from "./ainewsSchema.js";
 import { NewsDataIo } from "./newsdataIOSchema.js";
-import { User } from "../data/userInfoSchema.js";
+import { basketballGames } from "./basketballSchema.js";
 var mongodb_url = "mongodb://127.0.0.1:27017/hotspot";
 
 // This is a standalone program which will populate the database with initial data.
@@ -23,7 +22,10 @@ async function run() {
   database.once('connected', () => {
     console.log('Database Connected');
 
-    initUserCollection()
+    // Do a get after start
+    getAllNews();
+    // Then do one get every 24 hours
+  //setScheduledTask(4, 0, getAllNews);
 
 })
 
@@ -71,28 +73,6 @@ function getGoogleTrend() {
       })
       .catch(function (error) {
           console.log(error);
-      })
-}
-
-function getTodayWeather(){
-    axios.get('https://the-weather-api.p.rapidapi.com/api/weather/auckland', 
-  {
-      headers: { 
-        'X-RapidAPI-Key': 'c5d7516ffamshd606a9ff318bad1p1f46bajsnabd2700a6eb6',
-        'X-RapidAPI-Host': 'the-weather-api.p.rapidapi.com'
-       }
-  })
-      .then( response => {
-          console.log(response.data.data);
-          const result = response.data.data
-          const spot = new TodayWeather({
-              source: 'Today Weather',
-              city: result.city,
-              current_weather: result.current_weather,
-              bg_image: result.bg_image,
-              temp: result.temp
-          })
-          spot.save();
       })
 }
 
@@ -180,16 +160,58 @@ function getNewsDataIo() {
             console.log(error);
         })
   }
+  // Excute tasks regularly
+function setScheduledTask(hour, minute, callTask) {
+  let taskTime = new Date();
+  taskTime.setHours(hour);
+  taskTime.setMinutes(minute);
+  let timeDiff = taskTime.getTime() - (new Date()).getTime(); // get time diff
+  timeDiff = timeDiff > 0 ? timeDiff : (timeDiff + 24 * 60 * 60 * 1000);
+  setTimeout(function() {
+      callTask(); 
+      setInterval(callTask, 24 * 60 * 60 * 1000); // 24 hours
+  }, timeDiff); 
+}
 
-  function initUserCollection() {
-    const spot = new User({
-      username: 'testUser',
-      email: 'test@test.com',
-      password: 'a123123123'
-
+function getBasketballGames() {
+  const currentDate = new Date().toISOString().split('T')[0];
+  axios.get('https://api-basketball.p.rapidapi.com/games',
+    {
+      params: {
+        timezone: 'Pacific/Auckland',
+        season: '2023-2024',
+        league: '12',
+        date: currentDate
+      },
+      headers: {
+        'X-RapidAPI-Key': '7fc5fae20cmsha2e70afcb71644dp13f69djsn471b97c2054c',
+        'X-RapidAPI-Host': 'api-basketball.p.rapidapi.com'
+      }
     })
-    spot.save();
-    }
+    .then(function (response) {
+      const data = response.data.response
+      console.log(response.data.response);
+      data.forEach(item => {
+        const spot = new basketballGames({
+          source: 'Basketball Games',
+          matchTime: item.date,
+          status: item.status.long,
+
+          team1Logo: item.teams.home.logo,
+          team2Logo: item.teams.away.logo,
+          team1: item.teams.home.name,
+          team2: item.teams.away.name,
+          score1: item.scores.home.total,
+          score2: item.scores.away.total
+        })
+        spot.save();
+      })
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+}
+
 
 
 
@@ -198,8 +220,8 @@ function getAllNews() {
   getGoogleTrend();
   getTodayInHistory();
   getTwitterTrend();
-  getTodayWeather();
   getaiNews();
   getNewsDataIo()
+  getBasketballGames()
 }
 run();
