@@ -120,9 +120,11 @@ npm run dev // run the server (port:3000)
 npm install // install dependcies 
 
 !! If version incompatibility error appears (beacuse of Material UI)
-!! Apply the command below first then npm install again
+!! Apply the command below first then execute npm install again
 npm install --legacy-peer-deps
 
+!!If version incompatibility error still appears
+Execute npm install --force instead of npm install
 
 npm run dev // run (port:5173)
 
