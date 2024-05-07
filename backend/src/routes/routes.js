@@ -6,6 +6,7 @@ import { aiNews } from "../data/ainewsSchema.js";
 import { NewsDataIo } from "../data/newsdataIOSchema.js";
 import { User } from "../data/userInfoSchema.js";
 import { basketballGames } from "../data/basketballSchema.js";
+import bcrypt from 'bcrypt';
 
 const router = express.Router();
 
@@ -107,10 +108,11 @@ router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!user) {
       return res.send('User not found');
     }
-    if (password !== user.password) {
+    if (!isMatch) {
       return res.send('Incorrect password');
     }
     res.send('Login successful');
