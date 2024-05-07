@@ -1,11 +1,11 @@
 import express from "express";
 import { GoogleTrend } from "../data/googleTrendSchema.js";
 import { HistoryToday } from "../data/historyinTodaySchema.js";
-import { TodayWeather } from "../data/TodayWeatherSchema.js";
 import { TwitterTrend } from "../data/twitterTrendSchema.js";
 import { aiNews } from "../data/ainewsSchema.js";
 import { NewsDataIo } from "../data/newsdataIOSchema.js";
 import { User } from "../data/userInfoSchema.js";
+import { basketballGames } from "../data/basketballSchema.js";
 
 const router = express.Router();
 
@@ -32,15 +32,6 @@ router.get("/historyTodays", async function (req, res) {
     return res.status(200).send({ results: todays });
   } catch (err) {
     res.status(500).json({ error: "Error getting history todays" });
-  }
-});
-
-router.get("/TodayWeathers", async function (req, res) {
-  try {
-    const weathers = await TodayWeather.find().limit(20);
-    return res.status(200).send({ results: weathers });
-  } catch (err) {
-    res.status(500).json({ error: "Error getting Today Weather" });
   }
 });
 
@@ -128,5 +119,21 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get("/basketballGames", async function (req, res) {
+  try {
+    const games = await basketballGames.find().limit(2);
+    const result = {
+      data: {
+        list: games,
+        total: games.length,
+      },
+      msg: "Request successful",
+      code: 200,
+    };
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Error getting latest games" });
+  }
+});
 export default router;
 
