@@ -143,9 +143,24 @@ This project is open-source and available under the MIT License.
 - **Email:** Must be in a valid email format.
     Click the "Sign up" button.
 - **Here are some examples for tests:**
-    EXAMPLE 1:Username: 123, Password:123, Confirm Password:12, Email: 123gmail.com
-    EXAMPLE 2:Username: 123asd, Password: 123asdASD, Confirm Password: 123asdASD, Email: 123@gmail.com
-    EXAMPLE 3:Username: 123dsa, password: 123ASDASD, Confirm Password: 123asd, Email: 123@gmail.com
+### Example 1
+- **Username:** 123
+- **Password:** 123
+- **Confirm Password:** 12
+- **Email:** 123gmail.com
+
+### Example 2
+- **Username:** 123asd
+- **Password:** 123asdASD
+- **Confirm Password:** 123asdASD
+- **Email:** 123@gmail.com
+
+### Example 3
+- **Username:** 123dsa
+- **Password:** 123ASDASD
+- **Confirm Password:** 123asd
+- **Email:** 123@gmail.com
+
 ### Verify:
     If all fields meet the requirements, an alert with "You have registered successfully!" should appear.
     If any field does not meet the requirements, an error message should be displayed in red below the corresponding field.
@@ -155,9 +170,13 @@ This project is open-source and available under the MIT License.
 -**Password**: Enter the correct password.
     Click the "Login" button.
 -**Here are two examples for tests**
-    This example you should run Register example2 first:
-    -**Successful Example**: Username: 123asd, password:123asdASD
-    -**Fail Example**: Username:123, password:12345
+    This example you should run Register Example2 first:
+### Successful Example
+- **Username:** 123asd
+- **Password:** 123asdASD
+### Fail Example
+- **Username:** 123asd
+- **Password:** 12345
 
 ### Verify:
     If the credentials are correct, an alert with "Login successful" should appear.
