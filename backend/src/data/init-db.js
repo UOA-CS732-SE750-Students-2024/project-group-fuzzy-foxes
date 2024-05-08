@@ -10,11 +10,28 @@ import { aiNews } from "./ainewsSchema.js";
 import { NewsDataIo } from "./newsdataIOSchema.js";
 import { basketballGames } from "./basketballSchema.js";
 var mongodb_url = "mongodb://127.0.0.1:27017/hotspot";
+const connectionString = process.env.CLOUD_MONGODB_CONNECTION_STRING;
 
 // This is a standalone program which will populate the database with initial data.
 async function run() {
-  mongoose.connect(mongodb_url);
-  const database = mongoose.connection;
+  //mongoose.connect(mongodb_url);
+  try {
+    // 连接到 MongoDB Atlas
+    await mongoose.connect(connectionString);
+    console.log('MongoDB connection successful');
+
+    // 连接成功后执行操作
+    await getAllNews();
+    
+    // excute getAllNews every 24 hours
+    //setInterval(getAllNews, 24 * 60 * 60 * 1000);
+
+  } catch (error) {
+    console.error('MongoDB connection error:', error);
+  }
+}
+
+  /*const database = mongoose.connection;
   database.on('error', (error) => {
     console.log(error)
 })
@@ -29,7 +46,7 @@ async function run() {
 
 })
 
-}
+}*/
 
 function getTodayInHistory() {
   axios.get('https://today-in-history.p.rapidapi.com/thisday', 
@@ -54,21 +71,27 @@ function getTodayInHistory() {
 function getGoogleTrend() {
   axios.get('https://serpapi.com/search.json?engine=google_trends_trending_now&frequency=realtime&geo=US&cat=all&api_key=949a8410438c663d34685340398a4081c9d37595a064129972a2616c17152dc8')
       .then(function (response) {
-          const data = response.data.realtime_searches
-          console.log(response.data.realtime_searches);
-          data.forEach(item => {
-              item.articles.forEach(
-                  article => {
-                      const spot = new GoogleTrend({
-                          source: 'Google trend',
-                          title: article.title,
-                          url: article.link,
-                          thumbnail: article.thumbnail
-                      })
-                      spot.save();
-                  }
-              )
-          });
+        const data = response.data.realtime_searches;
+        console.log(data);
+        let count = 0;  
+        const maxArticles = 20; 
+
+        for (const item of data) {
+            if (item.articles.length > 0 && count < maxArticles) { 
+                const firstArticle = item.articles[0]; 
+
+                const spot = new GoogleTrend({
+                    source: 'Google trend',
+                    title: firstArticle.title,
+                    url: firstArticle.link,
+                    thumbnail: firstArticle.thumbnail
+                });
+                spot.save(); 
+                count++; 
+                
+                if (count >= maxArticles) break; 
+            }
+        }
 
       })
       .catch(function (error) {

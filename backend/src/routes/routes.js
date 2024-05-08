@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/googleTrends", async function (req, res) {
   try {
-    const trends = await GoogleTrend.find().limit(20);
+    const trends = await GoogleTrend.find().sort({ createdAt: -1 }).limit(20);
     const result = {
       data: {
         list: trends,
@@ -29,7 +29,7 @@ router.get("/googleTrends", async function (req, res) {
 
 router.get("/historyTodays", async function (req, res) {
   try {
-    const todays = await HistoryToday.find().limit(20);
+    const todays = await HistoryToday.find().sort({ createdAt: -1 }).limit(1);
     return res.status(200).send({ results: todays });
   } catch (err) {
     res.status(500).json({ error: "Error getting history todays" });
@@ -38,7 +38,7 @@ router.get("/historyTodays", async function (req, res) {
 
 router.get("/twitterTrends", async function (req, res) {
   try {
-    const trends = await TwitterTrend.find().limit(20);
+    const trends = await TwitterTrend.find().sort({ createdAt: -1 }).limit(20);
     const result = {
       data: {
         list: trends,
@@ -55,7 +55,7 @@ router.get("/twitterTrends", async function (req, res) {
 
 router.get("/aiNews", async function (req, res) {
   try {
-    const news = await aiNews.find().limit(20);
+    const news = await aiNews.find().sort({ createdAt: -1 }).limit(20);
     const result = {
       data: {
         list: news,
@@ -73,7 +73,7 @@ router.get("/aiNews", async function (req, res) {
 
 router.get("/newsdataIO", async function (req, res) {
   try {
-    const news = await NewsDataIo.find().limit(20);
+    const news = await NewsDataIo.find().sort({ createdAt: -1 }).limit(20);
     const result = {
       data: {
         list: news,
@@ -108,13 +108,16 @@ router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
-    const isMatch = await bcrypt.compare(password, user.password);
+
     if (!user) {
       return res.send('User not found');
     }
+
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.send('Incorrect password');
     }
+
     res.send('Login successful');
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -123,7 +126,7 @@ router.post('/login', async (req, res) => {
 
 router.get("/basketballGames", async function (req, res) {
   try {
-    const games = await basketballGames.find().limit(2);
+    const games = await basketballGames.find().sort({ createdAt: -1 }).limit(2);
     const result = {
       data: {
         list: games,

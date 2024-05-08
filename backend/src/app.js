@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 import routes from "./routes/routes.js";
 app.use("/", routes);
 
-await mongoose.connect(process.env.MONGODB_CONNECTION_STRING);
+await mongoose.connect(process.env.CLOUD_MONGODB_CONNECTION_STRING);
 // Start the server running. Once the server is running, the given function will be called, which will
 // log a simple message to the server console. Any console.log() statements in your node.js code
 // can be seen in the terminal window used to run the server.

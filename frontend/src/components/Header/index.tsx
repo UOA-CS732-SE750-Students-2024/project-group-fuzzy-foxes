@@ -72,6 +72,7 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
   };
   const handleLogout = () => {
     setIsLoggedIn(false);
+    alert("User Log Off successfully")
   };
 
   const handleCloseLoginDialog = () => {
@@ -84,28 +85,44 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
       username: loginUsername,
       password: loginPassword,
     };
-    axios.post("http://localhost:3000/login", loginData).then((response) => {
+    const resetInputsAndErrors = () => {
       setLoginUsernameError("");
       setLoginPasswordError("");
       setLoginPassword("");
       setLoginUsername("");
-      if (response.data === "User not found") {
-        setLoginUsernameError("User not found");
-        return;
+    };
+    console.log(loginData)
+    axios.post("http://localhost:3000/login", loginData)
+    .then((response) => {
+      const { data } = response;
+      console.log(data)
+      switch (data) {
+        case "User not found":
+          setLoginUsernameError("User not found");
+          localStorage.setItem('password', loginPassword);
+          localStorage.setItem('username', loginUsername);
+          break;
+        case "Incorrect password":
+          localStorage.setItem('username', loginUsername);
+          localStorage.setItem('password', loginPassword);
+          setLoginUsernameError("");
+          setLoginPasswordError("Your password is not correct.");
+          break;
+        case "Login successful":
+          setIsLoggedIn(true);
+          resetInputsAndErrors();
+          localStorage.removeItem('username');
+          localStorage.removeItem('password'); 
+          alert("Login successful");
+          handleCloseLoginDialog();
+          break;
+        default:
+          alert("Unexpected response from server");
       }
-      if (response.data === "Incorrect password") {
-        setLoginPasswordError("Your password is not correct.");
-        return;
-      }
-      if (response.data === "Login successful") {
-        setIsLoggedIn(true);
-        alert("Login successful");
-        setLoginUsernameError("");
-        setLoginPasswordError("");
-        setLoginPassword("");
-        setLoginUsername("");
-        handleCloseLoginDialog();
-      }
+    })
+    .catch(error => {
+      console.error("Login error:", error);
+      alert("An error occurred while logging in.");
     });
   };
   //register
