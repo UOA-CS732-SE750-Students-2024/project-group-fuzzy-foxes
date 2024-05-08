@@ -54,7 +54,7 @@ const HotList: FC<HotListConfig & HotListProps> = ({
    */
   const { data, loading, run } = useRequest(
     async () => {
-      const response = await fetch(`http://localhost:3000/${value}`);
+      const response = await fetch(`https://project-group-fuzzy-foxes-trendy-api.onrender.com/${value}`);
       if (eq(response.status, 200)) {
         const result = await response.json();
         console.log(result);

@@ -23,7 +23,7 @@ const BasketballMatchInfo: React.FC = () => {
 
     const fetchMatches = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/basketballGames');
+        const response = await axios.get('https://project-group-fuzzy-foxes-trendy-api.onrender.com/basketballGames');
         setMatches(response.data.data.list);
         console.log(response.data.data.list);
         setLastUpdated(new Date().toLocaleTimeString());

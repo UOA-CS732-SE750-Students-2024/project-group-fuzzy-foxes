@@ -10,7 +10,7 @@ const Footer: FC = () => {
   useEffect(() => {
     const fetchTodayInfo = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/historyTodays');
+        const response = await axios.get('https://project-group-fuzzy-foxes-trendy-api.onrender.com/historyTodays');
         // Check if the results array exists and has at least one element
         if (response.data && response.data.results && response.data.results.length > 0) {
           const firstResult = response.data.results[0]; // Access the first item in the results array

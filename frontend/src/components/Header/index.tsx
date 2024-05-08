@@ -92,7 +92,7 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
       setLoginUsername("");
     };
     console.log(loginData)
-    axios.post("http://localhost:3000/login", loginData)
+    axios.post("https://project-group-fuzzy-foxes-trendy-api.onrender.com/login", loginData)
     .then((response) => {
       const { data } = response;
       console.log(data)
@@ -170,7 +170,7 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
     };
 
     // send POST request
-    axios.post("http://localhost:3000/register", userData).then((response) => {
+    axios.post("https://project-group-fuzzy-foxes-trendy-api.onrender.com/register", userData).then((response) => {
       setEmailError("");
       setPasswordError("");
       setConfirmPasswordError("");
