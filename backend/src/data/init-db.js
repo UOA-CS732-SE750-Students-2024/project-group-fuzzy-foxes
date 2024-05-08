@@ -9,22 +9,20 @@ import { TwitterTrend } from "./twitterTrendSchema.js";
 import { aiNews } from "./ainewsSchema.js";
 import { NewsDataIo } from "./newsdataIOSchema.js";
 import { basketballGames } from "./basketballSchema.js";
-var mongodb_url = "mongodb://127.0.0.1:27017/hotspot";
-const connectionString = process.env.CLOUD_MONGODB_CONNECTION_STRING;
+
+const mongodb_url = process.env.MONGODB_URL || "mongodb://127.0.0.1:27017/hotspot";
 
 // This is a standalone program which will populate the database with initial data.
-async function run() {
+export async function run() {
   //mongoose.connect(mongodb_url);
   try {
     // 连接到 MongoDB Atlas
-    await mongoose.connect(connectionString);
+    await mongoose.connect(mongodb_url);
     console.log('MongoDB connection successful');
 
     // 连接成功后执行操作
     await getAllNews();
     
-    // excute getAllNews every 24 hours
-    //setInterval(getAllNews, 24 * 60 * 60 * 1000);
 
   } catch (error) {
     console.error('MongoDB connection error:', error);
@@ -183,18 +181,6 @@ function getNewsDataIo() {
             console.log(error);
         })
   }
-  // Excute tasks regularly
-function setScheduledTask(hour, minute, callTask) {
-  let taskTime = new Date();
-  taskTime.setHours(hour);
-  taskTime.setMinutes(minute);
-  let timeDiff = taskTime.getTime() - (new Date()).getTime(); // get time diff
-  timeDiff = timeDiff > 0 ? timeDiff : (timeDiff + 24 * 60 * 60 * 1000);
-  setTimeout(function() {
-      callTask(); 
-      setInterval(callTask, 24 * 60 * 60 * 1000); // 24 hours
-  }, timeDiff); 
-}
 
 function getBasketballGames() {
   const currentDate = new Date().toISOString().split('T')[0];

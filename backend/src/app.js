@@ -7,6 +7,7 @@ import cors from "cors";
 import morgan from "morgan";
 import mongoose from "mongoose";
 import bodyParser from 'body-parser';
+import { run } from './data/init-db.js'
 // Set's our port to the PORT environment variable, or 3000 by default if the env is not configured.
 const PORT = process.env.PORT ?? 3000;
 
@@ -24,8 +25,26 @@ app.use(bodyParser.json());
 import routes from "./routes/routes.js";
 app.use("/", routes);
 
-await mongoose.connect(process.env.CLOUD_MONGODB_CONNECTION_STRING);
-// Start the server running. Once the server is running, the given function will be called, which will
-// log a simple message to the server console. Any console.log() statements in your node.js code
-// can be seen in the terminal window used to run the server.
-app.listen(PORT, () => console.log(`App server listening on port ${PORT}!`));
+await mongoose.connect(process.env.MONGODB_URL);
+
+function startScheduledTasks() {
+    run().then(() => {
+        console.log('Initial database setup complete.');
+    }).catch(error => {
+        console.error('Failed to initialize the database on schedule:', error);
+    });
+
+    setInterval(() => {
+        run().then(() => {
+            console.log('Scheduled database refresh complete.');
+        }).catch(error => {
+            console.error('Failed to refresh the database:', error);
+        });
+    }, 24 * 60 * 60 * 1000);  // every 24 hours
+}
+
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+    startScheduledTasks();  
+});
