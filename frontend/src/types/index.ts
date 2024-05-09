@@ -25,7 +25,7 @@ export type HotListItem = {
  */
 export type HotListConfig = {
   value: HotTypes;
-  label?: string;
+  label: string;
   tip?: string;
 };
 
