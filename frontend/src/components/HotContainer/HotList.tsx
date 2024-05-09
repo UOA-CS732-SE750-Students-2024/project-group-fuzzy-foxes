@@ -32,7 +32,7 @@ import styles from "./index.module.scss";
 const { Text } = Typography;
 dayjs.extend(relativeTime);
 dayjs.locale("en");
-
+const backend_url = import.meta.env.VITE_BACKEND_URL;
 type HotListProps = {
   primaryColor: string;
   //Is it dark mode
@@ -54,7 +54,7 @@ const HotList: FC<HotListConfig & HotListProps> = ({
    */
   const { data, loading, run } = useRequest(
     async () => {
-      const response = await fetch(`http://localhost:3000/${value}`);
+      const response = await fetch(backend_url+`${value}`);
       if (eq(response.status, 200)) {
         const result = await response.json();
         console.log(result);

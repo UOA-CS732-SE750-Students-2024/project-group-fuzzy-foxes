@@ -35,6 +35,7 @@ import axios from "axios";
 const { Title, Text } = Typography;
 
 const { useToken } = theme;
+const backend_url = import.meta.env.VITE_BACKEND_URL;
 
 type HeaderProps = {
   children: ReactNode;
@@ -92,7 +93,7 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
       setLoginUsername("");
     };
     console.log(loginData)
-    axios.post("http://localhost:3000/login", loginData)
+    axios.post(backend_url + "login", loginData)
     .then((response) => {
       const { data } = response;
       console.log(data)
@@ -170,7 +171,7 @@ const Header: FC<HeaderProps> = ({ children, isLoggedIn, setIsLoggedIn }) => {
     };
 
     // send POST request
-    axios.post("http://localhost:3000/register", userData).then((response) => {
+    axios.post(backend_url+"register", userData).then((response) => {
       setEmailError("");
       setPasswordError("");
       setConfirmPasswordError("");
