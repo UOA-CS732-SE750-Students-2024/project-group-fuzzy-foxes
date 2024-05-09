@@ -89,19 +89,26 @@ For reporting issues, please use the GitHub issues tracker. Include as much deta
 - **Google Trends**
 - **AI News**
 - **NewsDataIO**
-## Run the project(Deploy by using Render)
-!! Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more  
-!! If the data is not loaded successfully, please refresh the page 1-2 minutes after opening   
 
--Website: https://project-group-fuzzy-foxes.onrender.com/  
--Account:   
+## Run Production (Deployed using Render.com)
+**Note:** \
+!! Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.
+!! If the data is not loaded successfully, please refresh the page 1-2 minutes after opening.
+
+- Website: https://project-group-fuzzy-foxes.onrender.com/  
+- Example Account:   
 username: admin   
 password: Admin123  
-Or register an account.
+Or register a new account.
 
 
-## Run the project(local)
-- **Backend**
+## Run the project in development environment (localhost version)
+- Step 1: Clone the whole project:
+```
+git clone https://github.com/UOA-CS732-SE750-Students-2024/project-group-fuzzy-foxes.git
+```
+- Step 2:
+### **Backend**
 -under ./backend
 ```
 'npm install // install dependcies'
