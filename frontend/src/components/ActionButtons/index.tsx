@@ -53,7 +53,7 @@ const ActionButtons: FC<ActionButtonsProps> = ({
   const onChangeHotShow = (
     checked: boolean,
     value: HotTypes,
-    label: string | undefined
+    label: string
   ) => {
     // List not displayed
     const hiddenHotList =
