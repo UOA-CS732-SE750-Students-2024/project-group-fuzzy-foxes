@@ -21,7 +21,7 @@ export async function run() {
     console.log('MongoDB connection successful');
 
     // 连接成功后执行操作
-    await getAllNews();
+    //await getAllNews();
     
 
   } catch (error) {

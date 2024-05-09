@@ -27,7 +27,7 @@ app.use("/", routes);
 
 await mongoose.connect(process.env.MONGODB_URL);
 
-function startScheduledTasks() {
+/*function startScheduledTasks() {
     run().then(() => {
         console.log('Initial database setup complete.');
     }).catch(error => {
@@ -41,10 +41,10 @@ function startScheduledTasks() {
             console.error('Failed to refresh the database:', error);
         });
     }, 24* 60 *60 * 1000);  // every 24 hours
-}
+}*/
 
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-    startScheduledTasks();  
+    //startScheduledTasks();  
 });
