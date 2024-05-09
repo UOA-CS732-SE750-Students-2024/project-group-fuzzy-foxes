@@ -40,7 +40,7 @@ function startScheduledTasks() {
         }).catch(error => {
             console.error('Failed to refresh the database:', error);
         });
-    }, 24 * 60 * 60 * 1000);  // every 24 hours
+    }, 60 * 1000);  // every 24 hours
 }
 
 
