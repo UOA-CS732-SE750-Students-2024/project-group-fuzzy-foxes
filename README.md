@@ -1,6 +1,6 @@
 # COMPSCI 732 / SOFTENG 750 project - Team Fuzzy Foxes
 
-Welcome to the our project Trendy! 
+Welcome to the our project Trendy!  
 ![](./frontend/src/assets/logo.png)
 
 Our team members are:
@@ -95,27 +95,40 @@ For reporting issues, please use the GitHub issues tracker. Include as much deta
 - **AI News**
 - **NewsDataIO**
 ## Run the project(Deploy by using Render)
-website: https://project-group-fuzzy-foxes.onrender.com/
-Account- username:admin password: Admin123 or register an account.
+-Website: https://project-group-fuzzy-foxes.onrender.com/  
+-Account:   
+username: admin   
+password: Admin123  
+Or register an account.
 
 
 ## Run the project(local)
 - **Backend**
 -under ./backend
-
-npm install // install dependcies
-
-create .env file and fill :
+```
+'npm install // install dependcies'
+```
+Create .env file and fill MongoDB connection string, API Keys and Additional configuration:
 # MongoDB connection string
+```
 MONGODB_URL=mongodb://localhost:27017
+```
 
 # API keys for various services
+```
 RAPIDAPI_KEY_HISTORY=Your KEY
 RAPIDAPI_KEY_TWITTER=Your KEY
 API_KEY_GOOGLE_TRENDS=Your KEY
 RAPIDAPI_KEY_AI_NEWS=Your KEY
 API_KEY_NEWS_DATA_IO=Your KEY
 RAPIDAPI_KEY_BASKETBALL=Your KEY
+```
+
+# Additional configuration
+```
+NODE_ENV=development
+PORT=3000
+```
 
 npm run dev // run the server (port:3000)
 
@@ -124,13 +137,18 @@ npm run dev // run the server (port:3000)
 - **Frontend**
 -under ./frontend
 
-npm install // install dependcies 
+```
+npm install // install dependcies
+```
 
-create .env file and fill :
+Create .env file and fill :
+```
 VITE_BACKEND_URL=http://localhost:3000/
-
+```
+Then
+```
 npm run dev // run (port:5173)
-
+```
 
 ## License
 
@@ -138,9 +156,9 @@ This project is open-source and available under the MIT License.
 
 ## Testing the project(local)
 ### Overview
-    The application includes login and registration functionality. Here's what you must do before you want to test all features of your project:
+The application includes login and registration functionality. Here's what you must do before you want to test all features of your project:
 ### Before Login
-    Please register an account and log in according to the following requirements
+Please register an account and log in according to the following requirements
 
 - **Username:**  Must be at least 4 characters long and contain only alphanumeric characters.
 - **Password:** Must include at least one uppercase letter, one lowercase letter, and be at least 8 characters long without special symbols.
@@ -167,14 +185,14 @@ This project is open-source and available under the MIT License.
 - **Email:** 123@gmail.com
 
 ### Verify:
-    If all fields meet the requirements, an alert with "You have registered successfully!" should appear.
-    If any field does not meet the requirements, an error message should be displayed in red below the corresponding field.
+If all fields meet the requirements, an alert with "You have registered successfully!" should appear.  
+If any field does not meet the requirements, an error message should be displayed in red below the corresponding field.
 ### Testing Login
-    Enter the following details:
--**Username**: Use the username from a registered account.
--**Password**: Enter the correct password.
-    Click the "Login" button.
--**Here are two examples for tests**
+Enter the following details:  
+-**Username**: Use the username from a registered account.  
+-**Password**: Enter the correct password.  
+    Click the "Login" button.  
+-**Here are two examples for tests**  
     This example you should run Register Example2 first:
 ### Successful Example
 - **Username:** 123asd
@@ -184,5 +202,5 @@ This project is open-source and available under the MIT License.
 - **Password:** 12345
 
 ### Verify:
-    If the credentials are correct, an alert with "Login successful" should appear.
-    If the username is not found or the password is incorrect, the corresponding error message should be displayed in red.
+If the credentials are correct, an alert with "Login successful" should appear.  
+If the username is not found or the password is incorrect, the corresponding error message should be displayed in red.
