@@ -4,13 +4,14 @@ import { FC, useEffect, useState} from 'react'
 import axios from 'axios';
 
 const { Text,Link} = Typography;
+const backend_url = import.meta.env.VITE_BACKEND_URL;
 
 const Footer: FC = () => {
   const [todayInfo, setTodayInfo] = useState({ title: '', url: '' });
   useEffect(() => {
     const fetchTodayInfo = async () => {
       try {
-        const response = await axios.get('https://project-group-fuzzy-foxes-trendy-api.onrender.com/historyTodays');
+        const response = await axios.get(backend_url + 'historyTodays');
         // Check if the results array exists and has at least one element
         if (response.data && response.data.results && response.data.results.length > 0) {
           const firstResult = response.data.results[0]; // Access the first item in the results array
