@@ -53,7 +53,6 @@ Key functionalities include:
 - **Material UI (https://mui.com/):** 
 
 
-
 ## Project Setup
 
 ### Prerequisites
@@ -85,10 +84,6 @@ Key functionalities include:
 
 - **History(For Login user)**
 
-- **Cloud Database** 
-
-- **Project Deployment** 
-
 ## Reporting Issues and Debugging
 
 For reporting issues, please use the GitHub issues tracker. Include as much detail as possible in your report, such as error messages, line numbers, and conditions that triggered the problem.
@@ -99,32 +94,40 @@ For reporting issues, please use the GitHub issues tracker. Include as much deta
 - **Google Trends**
 - **AI News**
 - **NewsDataIO**
+## Run the project(Deploy by using Render)
+website: https://project-group-fuzzy-foxes.onrender.com/
+Account- username:admin password: Admin123 or register an account.
 
-## Run the project
+
+## Run the project(local)
 - **Backend**
 -under ./backend
 
 npm install // install dependcies
 
--cd to ./backend/src/data
+create .env file and fill :
+# MongoDB connection string
+MONGODB_URL=mongodb://localhost:27017
 
-npm run init-db //fetch API and get data from API and save them to MongoDB
-
--back to ./backend
+# API keys for various services
+RAPIDAPI_KEY_HISTORY=Your KEY
+RAPIDAPI_KEY_TWITTER=Your KEY
+API_KEY_GOOGLE_TRENDS=Your KEY
+RAPIDAPI_KEY_AI_NEWS=Your KEY
+API_KEY_NEWS_DATA_IO=Your KEY
+RAPIDAPI_KEY_BASKETBALL=Your KEY
 
 npm run dev // run the server (port:3000)
+
+
 
 - **Frontend**
 -under ./frontend
 
 npm install // install dependcies 
 
-!! If version incompatibility error appears (beacuse of Material UI)
-!! Apply the command below first then execute npm install again
-npm install --legacy-peer-deps
-
-!!If version incompatibility error still appears
-Execute npm install --force instead of npm install
+create .env file and fill :
+VITE_BACKEND_URL=http://localhost:3000/
 
 npm run dev // run (port:5173)
 
@@ -133,7 +136,7 @@ npm run dev // run (port:5173)
 
 This project is open-source and available under the MIT License.
 
-## Testing the project
+## Testing the project(local)
 ### Overview
     The application includes login and registration functionality. Here's what you must do before you want to test all features of your project:
 ### Before Login
