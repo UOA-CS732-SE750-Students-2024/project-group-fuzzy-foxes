@@ -95,6 +95,9 @@ For reporting issues, please use the GitHub issues tracker. Include as much deta
 - **AI News**
 - **NewsDataIO**
 ## Run the project(Deploy by using Render)
+!! Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more  
+!! If the data is not loaded successfully, please refresh the page 1-2 minutes after opening   
+
 -Website: https://project-group-fuzzy-foxes.onrender.com/  
 -Account:   
 username: admin   
