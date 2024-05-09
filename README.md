@@ -17,7 +17,7 @@
 
 ## Project Information
 
-Trendy is an online entertainment platform that aims to provide users with relaxing and entertaining content and services, allowing users to find a moment of rest and fun in their busy lives. By browsing this website users can get the latest hot news or trends across different mordem social media platforms all in one go one the internet rather than maually browse different website to search the information. The positioning of the Trendy website is to create a relaxing and pleasant space, providing users with a way to balance work and life and relax. It aims to allow users to find a moment of relaxation and happiness in their busy lives.
+Trendy is an online entertainment platform that aims to provide users with relaxing and entertaining content and services, allowing users to find a moment of rest and fun in their busy lives. By browsing this website users can get the latest hot news or trends across different modern social media platforms all in one go on the internet rather than manually browse different websites to search the information. The positioning of the Trendy website is to create a relaxing and pleasant space, providing users with a way to balance work and life and relax. It aims to allow users to find a moment of relaxation and happiness in their busy lives.
 
 ## Features
 
@@ -25,15 +25,16 @@ This application consists of several key parts, each serving a distinct purpose:
 
 - **Login and Signup:** For user authentication processes allowing login and account creation.
 
-- **Header:** It displays the current time, login and register buttons, and the ability to switch to your preferred theme color.
+- **Header:** It displays the current time, login and register buttons, and the ability to switch to your preferred theme colour.
 
 - **Container:** The left part contains the hot news of various websites. On the right are some small functional components, including basketball game scores, weather of the day, daily quotes and announcements about this website.
 
-- **Footer:** Just a footnote and Toady history. The author is noted.
+- **Footer:** Just a footnote and Toady history. The author is noted. 
 
+\
 Key functionalities include:
 
-- **Login and Signup:** Users can sign up on this website and then log in. Logged in users will enjoy more features.
+- **Login and Signup:** Users can sign up on this website and then log in. Logged-in users will enjoy more features.
 
 - **Get the Latest News:** Through the API, get the current hot news from various websites (Twitter, Google, etc.) and display it on the page.
 
@@ -65,10 +66,10 @@ Key functionalities include:
   2. Download the version suitable for your operating system (Windows, macOS, or Linux).
   3. Follow the installation instructions on the website to install Node.js and npm (included in the installation package).
 
-- This project requires MongoDB, If you don't have MongoDB (Recommend with MongoDBCompass) installed, follow these steps to install it:
+- This project requires MongoDB, If you don't have MongoDB (Recommended with MongoDBCompass) installed, follow these steps to install it:
   1. Go to [MongoDB Community Server Download](https://www.mongodb.com/try/download/community)
   2. Download the version suitable for your operating system (Windows, macOS, or Linux) and install it.
-  3. During installation, Recommend to chose also download and install MongoDBCompass which is a powerful GUI-based navigation tool.
+  3. During installation, it is recommended to choose both download and install MongoDBCompass which is a powerful GUI-based navigation tool.
 
 
 ## Future Plans
@@ -77,13 +78,13 @@ Key functionalities include:
 
 - **Mini Games** 
 
-- **Browsing History (Only for logined users)**
+- **Browsing History (Only for login users)**
 
 ## Reporting Issues and Debugging
 
 For reporting issues, please use the GitHub issues tracker. Include as much detail as possible in your report, such as error messages, line numbers, and conditions that triggered the problem.
 
-## Data Source Plantforms
+## Data Source Platforms
 
 - **Twitter**
 - **Google Trends**
@@ -97,36 +98,36 @@ For reporting issues, please use the GitHub issues tracker. Include as much deta
 
 - Website: https://project-group-fuzzy-foxes.onrender.com/  
 - Example Account:   
-username: admin   
-password: Admin123  
+  -- username: admin   
+  -- password: Admin123  
 Or register a new account.
 
 
 ## Run the project in development environment (localhost version)
-- Step 1: Clone the whole project:
+##### Step 1: Clone the whole project:
 ```
 git clone https://github.com/UOA-CS732-SE750-Students-2024/project-group-fuzzy-foxes.git
 ```
-- Step 2:Go to the project path
+##### Step 2: Go to the project path
 ```
 cd project-group-fuzzy-foxes
 ```
 ### **Backend**
-##### step1: Go to the backend path
+##### Step 1: Go to the backend path
 ```
 cd backend
 ```
-##### step2: install dependcies
+##### Step 2: Install dependencies
 ```
 npm install
 ```
-##### step3: Create .env file and fill MongoDB connection string, API Keys and Additional configuration:
-** Note: .env file should be in the 'backend' path **
+##### step 3: Create .env file and fill MongoDB connection string, API Keys and Additional configuration:
+**Note: .env file should be in the 'backend' path**
 - MongoDB connection string
 ```
 MONGODB_URL=mongodb://localhost:27017
 ```
-Please note 27017 is an example default port, your instance may vary.  
+Please note that 27017 is an example default port, your instance may vary.  
 
 - API keys for various services
     
@@ -143,7 +144,7 @@ RAPIDAPI_KEY_BASKETBALL=Your KEY
 NODE_ENV=development
 PORT=3000
 ```
-##### step4: Run the server (port:3000) 
+##### Step 4: Run the server (port:3000) 
 ```
 npm run dev
 ```
@@ -151,17 +152,17 @@ npm run dev
 
 ### **Frontend**
 
-##### step1: Go to the front path，open a new terminal in the project and run command below
+##### Step 1: Go to the front path， open a new terminal in the project and run the command below
 ```
 cd frontend
 ```
-##### step2: install dependcies
+##### Step 2: Install dependencies
 ```
 npm install
 ```
 
 
-##### step3: Create .env file and fill :
+##### step 3: Create .env file and fill :
 ** Note: .env file should be in the 'frontend' path **
 ```
 VITE_BACKEND_URL=http://localhost:3000/
@@ -214,7 +215,7 @@ Enter the following details:
 -**Password**: Enter the correct password.  
     Click the "Login" button.  
 -**Here are two examples for tests**  
-    This example you should run Register Example2 first:
+    For this example you should run Register Example2 first:
 ### Successful Example
 - **Username:** 123asd
 - **Password:** 123asdASD
