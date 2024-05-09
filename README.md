@@ -1,4 +1,4 @@
-# COMPSCI 732 / SOFTENG 750 project - Team Fuzzy Foxes
+#### COMPSCI 732 / SOFTENG 750 project - Team Fuzzy Foxes
 
 ## Welcome to the our project Trendy!  
 ![](./frontend/src/assets/logo.png)
