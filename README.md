@@ -121,6 +121,7 @@ cd backend
 npm install
 ```
 ##### step3: Create .env file and fill MongoDB connection string, API Keys and Additional configuration:
+** Note: .env file should be in the 'backend' path **
 - MongoDB connection string
 ```
 MONGODB_URL=mongodb://localhost:27017
@@ -161,6 +162,7 @@ npm install
 
 
 ##### step3: Create .env file and fill :
+** Note: .env file should be in the 'frontend' path **
 ```
 VITE_BACKEND_URL=http://localhost:3000/
 ```
