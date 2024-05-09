@@ -226,3 +226,6 @@ Enter the following details:
 ### Verify:
 If the credentials are correct, an alert with "Login successful" should appear.  
 If the username is not found or the password is incorrect, the corresponding error message should be displayed in red.
+
+
+***For more information please refer to [WIKI](https://github.com/UOA-CS732-SE750-Students-2024/project-group-fuzzy-foxes/wiki)***
