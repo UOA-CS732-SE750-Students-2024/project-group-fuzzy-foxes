@@ -152,7 +152,7 @@ npm run dev
 
 ### **Frontend**
 
-##### Step 1: Go to the front path， open a new terminal in the project and run the command below
+##### Step 1: Go to the front path, open a new terminal in the project and run the command below
 ```
 cd frontend
 ```
