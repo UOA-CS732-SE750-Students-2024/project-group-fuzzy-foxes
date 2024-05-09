@@ -1,9 +1,11 @@
-#### COMPSCI 732 / SOFTENG 750 project - Team Fuzzy Foxes
+# COMPSCI 732 / SOFTENG 750 Project - Team Fuzzy Foxes
 
-## Welcome to the our project Trendy!  
+### Welcome to the our project Trendy!  
 ![](./frontend/src/assets/logo.png)
 
-Our team members are:
+<br />
+
+### Our team members are:
 - Feiliang Liu
 - Bond Chen
 - Yaoquan Cai
@@ -13,7 +15,7 @@ Our team members are:
 
 ![](./group-image/Fuzzy%20Foxes.webp)
 
-## Project information
+## Project Information
 
 Trendy is an online entertainment platform that aims to provide users with relaxing and entertaining content and services, allowing users to find a moment of rest and fun in their busy lives. By browsing this website users can get the latest hot news or trends across different mordem social media platforms all in one go one the internet rather than maually browse different website to search the information. The positioning of the Trendy website is to create a relaxing and pleasant space, providing users with a way to balance work and life and relax. It aims to allow users to find a moment of relaxation and happiness in their busy lives.
 
@@ -43,14 +45,14 @@ Key functionalities include:
 
 ## Technology Stack
 
-- **React (https://react.dev/):** 
-- **Vite (https://www.vitejs.net/):** 
-- **Antd (https://ant-design.antgroup.com/):** 
-- **MongoDB (https://www.mongodb.com//):** 
-- **Express (https://expressjs.com/):** 
-- **Node.js (https://nodejs.org/en/):** 
-- **TypeScript (https://www.typescriptlang.org/):** 
-- **Material UI (https://mui.com/):** 
+- **React (https://react.dev/)** 
+- **Vite (https://www.vitejs.net/)** 
+- **Antd (https://ant-design.antgroup.com/)** 
+- **MongoDB (https://www.mongodb.com//)** 
+- **Express (https://expressjs.com/)** 
+- **Node.js (https://nodejs.org/en/)** 
+- **TypeScript (https://www.typescriptlang.org/)** 
+- **Material UI (https://mui.com/)** 
 
 
 ## Project Setup
@@ -61,20 +63,13 @@ Key functionalities include:
 
   1. Go to [Node.js official website](https://nodejs.org/).
   2. Download the version suitable for your operating system (Windows, macOS, or Linux).
-  3. Follow the installation instructions on the website to install Node.js and npm.
+  3. Follow the installation instructions on the website to install Node.js and npm (included in the installation package).
 
 - This project requires MongoDB, If you don't have MongoDB (Recommend with MongoDBCompass) installed, follow these steps to install it:
   1. Go to [MongoDB Community Server Download](https://www.mongodb.com/try/download/community)
   2. Download the version suitable for your operating system (Windows, macOS, or Linux) and install it.
   3. During installation, Recommend to chose also download and install MongoDBCompass which is a powerful GUI-based navigation tool.
 
-  ## Code Overview
-
-- **main.ts:** Entry point of the application.
-- **src/components:** Contains all components used throughout the application.
-- **src/enums:** Defines some constants and enumeration types. Website theme mode (light theme and dark theme) as well as theme settings and hot list display settings
-- **src/types:** Some type aliases are defined to describe different data structures and configuration items.
-- **src/utils:** It defines some functions and constants for storing, retrieving, and removing data from localStorage, as well as the function of formatting numbers so that they can be displayed in a friendly format on the interface.
 
 ## Future Plans
 
@@ -82,13 +77,13 @@ Key functionalities include:
 
 - **Mini Games** 
 
-- **History(For Login user)**
+- **Browsing History (Only for logined users)**
 
 ## Reporting Issues and Debugging
 
 For reporting issues, please use the GitHub issues tracker. Include as much detail as possible in your report, such as error messages, line numbers, and conditions that triggered the problem.
 
-## Plantforms
+## Data Source Plantforms
 
 - **Twitter**
 - **Google Trends**
@@ -116,7 +111,7 @@ Create .env file and fill MongoDB connection string, API Keys and Additional con
 ```
 MONGODB_URL=mongodb://localhost:27017
 ```
-
+Please note 27017 is an example default port, your instance may vary.  
 # API keys for various services
 ```
 RAPIDAPI_KEY_HISTORY=Your KEY
