@@ -28,11 +28,6 @@ app.use("/", routes);
 await mongoose.connect(process.env.MONGODB_URL);
 
 function startScheduledTasks() {
-    run().then(() => {
-        console.log('Initial database setup complete.');
-    }).catch(error => {
-        console.error('Failed to initialize the database on schedule:', error);
-    });
 
     setInterval(() => {
         run().then(() => {
