@@ -107,19 +107,28 @@ Or register a new account.
 ```
 git clone https://github.com/UOA-CS732-SE750-Students-2024/project-group-fuzzy-foxes.git
 ```
-- Step 2:
+- Step 2:Go to the project path
+```
+cd project-group-fuzzy-foxes
+```
 ### **Backend**
--under ./backend
+##### step1: Go to the backend path
 ```
-'npm install // install dependcies'
+cd backend
 ```
-Create .env file and fill MongoDB connection string, API Keys and Additional configuration:
-# MongoDB connection string
+##### step2: install dependcies
+```
+npm install
+```
+##### step3: Create .env file and fill MongoDB connection string, API Keys and Additional configuration:
+- MongoDB connection string
 ```
 MONGODB_URL=mongodb://localhost:27017
 ```
 Please note 27017 is an example default port, your instance may vary.  
-# API keys for various services
+
+- API keys for various services
+    
 ```
 RAPIDAPI_KEY_HISTORY=Your KEY
 RAPIDAPI_KEY_TWITTER=Your KEY
@@ -128,31 +137,36 @@ RAPIDAPI_KEY_AI_NEWS=Your KEY
 API_KEY_NEWS_DATA_IO=Your KEY
 RAPIDAPI_KEY_BASKETBALL=Your KEY
 ```
-
-# Additional configuration
+- Additional configuration
 ```
 NODE_ENV=development
 PORT=3000
 ```
-
-npm run dev // run the server (port:3000)
-
-
-
-- **Frontend**
--under ./frontend
-
+##### step4: Run the server (port:3000) 
 ```
-npm install // install dependcies
+npm run dev
 ```
 
-Create .env file and fill :
+
+### **Frontend**
+
+##### step1: Go to the front path，open a new terminal in the project and run command below
+```
+cd frontend
+```
+##### step2: install dependcies
+```
+npm install
+```
+
+
+##### step3: Create .env file and fill :
 ```
 VITE_BACKEND_URL=http://localhost:3000/
 ```
-Then
+##### step4: Run (port:5173)
 ```
-npm run dev // run (port:5173)
+npm run dev
 ```
 
 ## License
